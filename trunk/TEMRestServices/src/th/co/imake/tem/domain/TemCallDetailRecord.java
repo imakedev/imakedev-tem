@@ -1,34 +1,34 @@
 package th.co.imake.tem.domain;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
 @Entity
 @Table(name = "TEM_CALL_DETAIL_RECORD")
 public class TemCallDetailRecord implements Serializable {
 	private static final long serialVersionUID = 1L;
-	@Column(name = "TCDR_MSISDN_FROM")
-	private String tcdrMsIsdnFrom;
+	@Id
+	private TemCallDetailRecordPk temCallDetailRecordPk;
 	@Column(name = "TCDR_MSISDN_TO")
 	private String tcdrMsIsdnTo;
 	@Column(name = "TCDR_USED_COUNT")
 	private Double tcdrUsedCount;
-	@Column(name = "TCDR_USED_TIME")
-	private Timestamp tcdrUsedTime;
-	@ManyToOne
-	@Column(name = "TT_ID")
-	private TemType temType;
+//	@ManyToOne
+//	@Column(name = "TT_ID")
+//	private TemType temType;
 
-	public String getTcdrMsIsdnFrom() {
-		return tcdrMsIsdnFrom;
+	public TemCallDetailRecordPk getTemCallDetailRecordPk() {
+		return temCallDetailRecordPk;
 	}
 
-	public void setTcdrMsIsdnFrom(String tcdrMsIsdnFrom) {
-		this.tcdrMsIsdnFrom = tcdrMsIsdnFrom;
+	public void setTemCallDetailRecordPk(
+			TemCallDetailRecordPk temCallDetailRecordPk) {
+		this.temCallDetailRecordPk = temCallDetailRecordPk;
 	}
 
 	public String getTcdrMsIsdnTo() {
@@ -47,20 +47,12 @@ public class TemCallDetailRecord implements Serializable {
 		this.tcdrUsedCount = tcdrUsedCount;
 	}
 
-	public Timestamp getTcdrUsedTime() {
-		return tcdrUsedTime;
-	}
-
-	public void setTcdrUsedTime(Timestamp tcdrUsedTime) {
-		this.tcdrUsedTime = tcdrUsedTime;
-	}
-
-	public TemType getTemType() {
-		return temType;
-	}
-
-	public void setTemType(TemType temType) {
-		this.temType = temType;
-	}
+//	public TemType getTemType() {
+//		return temType;
+//	}
+//
+//	public void setTemType(TemType temType) {
+//		this.temType = temType;
+//	}
 
 }

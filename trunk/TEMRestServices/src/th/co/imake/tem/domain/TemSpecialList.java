@@ -3,28 +3,21 @@ package th.co.imake.tem.domain;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 @Entity
-@Table(name = "TEM_CALL_DETAIL_RECORD")
+@Table(name = "TEM_SPECIAL_LIST")
 public class TemSpecialList implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private String tslMsisdn;
-	private String tslMsisdnFriend;
-
-	public String getTslMsisdn() {
-		return tslMsisdn;
+	@Id
+	private TemSpecialListPk temSpecialListPk;
+	public TemSpecialListPk getTemSpecialListPk() {
+		return temSpecialListPk;
 	}
-
-	public void setTslMsisdn(String tslMsisdn) {
-		this.tslMsisdn = tslMsisdn;
+	public void setTemSpecialListPk(TemSpecialListPk temSpecialListPk) {
+		this.temSpecialListPk = temSpecialListPk;
 	}
-
-	public String getTslMsisdnFriend() {
-		return tslMsisdnFriend;
-	}
-
-	public void setTslMsisdnFriend(String tslMsisdnFriend) {
-		this.tslMsisdnFriend = tslMsisdnFriend;
-	}
+	
+	
 
 }

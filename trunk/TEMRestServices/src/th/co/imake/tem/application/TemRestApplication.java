@@ -16,7 +16,7 @@ public class TemRestApplication extends Application {
 		final ApplicationContext springContext = new ClassPathXmlApplicationContext(
 				new String[] {
 						"th/co/imake/tem/application/config/applicationContext-common.xml",
-						//"th/co/imake/tem/application/config/applicationContext-hibernate.xml",
+						"th/co/imake/tem/application/config/applicationContext-hibernate.xml",
 						"th/co/imake/tem/application/config/applicationContext-resource.xml",
 						"th/co/imake/tem/application/config/applicationContext-root-router.xml" });
 	
