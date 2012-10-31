@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 @XStreamAlias("temMsIsdnDTO")
-public class TemMsIsdn implements Serializable {
+public class TemMsIsdn extends BaseDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@XStreamAlias("msIsdn")
 	private String msIsdn;

@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 @XStreamAlias("temPackageDetailDTO")
-public class TemPackageDetail implements Serializable {
+public class TemPackageDetail extends BaseDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@XStreamAlias("tpdId")
 	private Integer tpdId;

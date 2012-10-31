@@ -12,10 +12,17 @@ import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import th.co.imake.tem.domain.TemCallDetailRecord;
+import th.co.imake.tem.domain.TemCallDetailRecordPk;
 import th.co.imake.tem.domain.TemCompany;
 import th.co.imake.tem.domain.TemMsIsdn;
+import th.co.imake.tem.domain.TemMsIsdnPackageDetail;
+import th.co.imake.tem.domain.TemMsIsdnPackageDetailPk;
+import th.co.imake.tem.domain.TemPackageDetail;
 import th.co.imake.tem.domain.TemPackageType;
 import th.co.imake.tem.domain.TemProvider;
+import th.co.imake.tem.domain.TemSpecialList;
+import th.co.imake.tem.domain.TemSpecialListPk;
 import th.co.imake.tem.domain.TemType;
 import th.co.imake.tem.service.TemService;
 import th.co.imake.tem.util.Paging;
@@ -499,6 +506,414 @@ public class TemServiceImpl implements TemService {
 			if (paging.getOrderBy() != null
 					&& paging.getOrderBy().trim().length() > 0) {
 				queryStr.append(" Order By temProvider." + paging.getOrderBy()
+						+ " asc");
+			}
+			Query query = session.createQuery(queryStr.toString());
+			Query queryC = session.createQuery(queryCount.toString());
+			for (Iterator iterator = map.keySet().iterator(); iterator
+					.hasNext();) {
+				String key = (String) iterator.next();
+				query.setParameter(Integer.parseInt(key), map.get(key));
+				queryC.setParameter(Integer.parseInt(key), map.get(key));
+			}
+			query.setFirstResult(paging.getPageSize()
+					* (paging.getPageNo() - 1));
+			query.setMaxResults(paging.getPageSize());
+			List list = query.list();
+
+			int count = Integer.parseInt(queryC.uniqueResult().toString());
+			transList.add(list);
+			transList.add(count + "");
+			return transList;
+		} catch (Exception re) {
+			re.printStackTrace();
+		}
+		return null;
+	}
+
+	public void insertTemSpecialList(TemSpecialList temSpecialList) {
+		Session session = sessionAnnotationFactory.getCurrentSession();
+		try {
+			session.save(temSpecialList);
+		} finally {
+			if (session != null) {
+				session = null;
+			}
+		}
+	}
+
+	public void updateTemSpecialList(TemSpecialList temSpecialList) {
+		Session session = sessionAnnotationFactory.getCurrentSession();
+		try {
+			session.update(temSpecialList);
+		} catch (Exception e) {
+			// TODO: handle exception
+		} finally {
+			if (session != null) {
+				session = null;
+			}
+		}
+	}
+
+	public void deleteTemSpecialList(TemSpecialList temSpecialList) {
+		Session session = sessionAnnotationFactory.getCurrentSession();
+		try {
+			session.delete(temSpecialList);
+		} finally {
+			if (session != null) {
+				session = null;
+			}
+		}
+	}
+
+	public List searchTemSpecialList(TemSpecialList temSpecialList,
+			Paging paging) {
+		List transList = new ArrayList();
+		Session session = null;
+		try {
+			session = sessionAnnotationFactory.getCurrentSession();
+			StringBuffer queryStr = new StringBuffer(
+					"from TemSpecialList temSpecialList ");
+			StringBuffer queryCount = new StringBuffer(
+					"select count(temSpecialList.temSpecialListPk.tslMsisdn) from  TemSpecialList temSpecialList ");
+			Map map = new HashMap();
+			boolean haveCondition = false;
+			int paramindex = 0;
+
+			TemSpecialListPk temSpecialListPk = temSpecialList.getTemSpecialListPk();
+			String tslMsisdn = temSpecialListPk!=null?temSpecialListPk.getTslMsisdn():null;
+			String tslMsisdnFriend = temSpecialListPk!=null?temSpecialListPk.getTslMsisdnFriend():null;
+
+			if (temSpecialListPk != null && tslMsisdn != null && tslMsisdn.trim().length() > 0) {
+				queryStr.append((haveCondition ? " and " : " where ")
+						+ " temSpecialList.tslMsisdn=? ");
+				queryCount.append((haveCondition ? " and " : " where ")
+						+ " temSpecialList.tslMsisdn=? ");
+				map.put("" + paramindex++, tslMsisdn);
+				haveCondition = true;
+			}
+			if (temSpecialListPk != null && tslMsisdnFriend != null && tslMsisdnFriend.trim().length() > 0) {
+				queryStr.append((haveCondition ? " and " : " where ")
+						+ " temSpecialList.tslMsisdnFriend=? ");
+				queryCount.append((haveCondition ? " and " : " where ")
+						+ " temSpecialList.tslMsisdnFriend=? ");
+				map.put("" + paramindex++, tslMsisdnFriend);
+				haveCondition = true;
+			}
+			if (paging.getOrderBy() != null
+					&& paging.getOrderBy().trim().length() > 0) {
+				queryStr.append(" Order By temSpecialList." + paging.getOrderBy()
+						+ " asc");
+			}
+			Query query = session.createQuery(queryStr.toString());
+			Query queryC = session.createQuery(queryCount.toString());
+			for (Iterator iterator = map.keySet().iterator(); iterator
+					.hasNext();) {
+				String key = (String) iterator.next();
+				query.setParameter(Integer.parseInt(key), map.get(key));
+				queryC.setParameter(Integer.parseInt(key), map.get(key));
+			}
+			query.setFirstResult(paging.getPageSize()
+					* (paging.getPageNo() - 1));
+			query.setMaxResults(paging.getPageSize());
+			List list = query.list();
+
+			int count = Integer.parseInt(queryC.uniqueResult().toString());
+			transList.add(list);
+			transList.add(count + "");
+			return transList;
+		} catch (Exception re) {
+			re.printStackTrace();
+		}
+		return null;
+	}
+
+	public void insertTemPackageDetail(TemPackageDetail temPackageDetail) {
+		Session session = sessionAnnotationFactory.getCurrentSession();
+		try {
+			session.save(temPackageDetail);
+		} finally {
+			if (session != null) {
+				session = null;
+			}
+		}
+	}
+
+	public void updateTemPackageDetail(TemPackageDetail temPackageDetail) {
+		Session session = sessionAnnotationFactory.getCurrentSession();
+		try {
+			session.update(temPackageDetail);
+		} catch (Exception e) {
+			// TODO: handle exception
+		} finally {
+			if (session != null) {
+				session = null;
+			}
+		}
+	}
+
+	public void deleteTemPackageDetail(TemPackageDetail temPackageDetail) {
+		Session session = sessionAnnotationFactory.getCurrentSession();
+		try {
+			session.delete(temPackageDetail);
+		} finally {
+			if (session != null) {
+				session = null;
+			}
+		}
+	}
+
+	public List searchTemPackageDetail(TemPackageDetail temPackageDetail,
+			Paging paging) {
+		List transList = new ArrayList();
+		Session session = null;
+		try {
+			session = sessionAnnotationFactory.getCurrentSession();
+			StringBuffer queryStr = new StringBuffer(
+					"from TemPackageDetail temPackageDetail ");
+			StringBuffer queryCount = new StringBuffer(
+					"select count(temPackageDetail) from  TemPackageDetail temPackageDetail ");
+			Map map = new HashMap();
+			boolean haveCondition = false;
+			int paramindex = 0;
+
+			Integer tpdId = temPackageDetail.getTpdId();
+			String tpdName = temPackageDetail.getTpdName();
+//			TemPackageType temPackageType = temPackageDetail.getTemPackageType();
+
+			if (tpdId != null) {
+				queryStr.append((haveCondition ? " and " : " where ")
+						+ " temPackageDetail.tpdId=? ");
+				queryCount.append((haveCondition ? " and " : " where ")
+						+ " temPackageDetail.tpdId=? ");
+				map.put("" + paramindex++, tpdId);
+				haveCondition = true;
+			}
+			if (tpdName != null && tpdName.trim().length() > 0) {
+				queryStr.append((haveCondition ? " and " : " where ")
+						+ " temPackageDetail.tpdName=? ");
+				queryCount.append((haveCondition ? " and " : " where ")
+						+ " temPackageDetail.tpdName=? ");
+				map.put("" + paramindex++, tpdName);
+				haveCondition = true;
+			}
+//			if (temPackageType != null && temPackageType.getTptId() != null) {
+//				queryStr.append((haveCondition ? " and " : " where ")
+//						+ " temPackageDetail.temPackageType.tptId=? ");
+//				queryCount.append((haveCondition ? " and " : " where ")
+//						+ " temPackageDetail.temPackageType.tptId=? ");
+//				map.put("" + paramindex++, temPackageType.getTptId());
+//				haveCondition = true;
+//			}
+			if (paging.getOrderBy() != null
+					&& paging.getOrderBy().trim().length() > 0) {
+				queryStr.append(" Order By temPackageDetail." + paging.getOrderBy()
+						+ " asc");
+			}
+			Query query = session.createQuery(queryStr.toString());
+			Query queryC = session.createQuery(queryCount.toString());
+			for (Iterator iterator = map.keySet().iterator(); iterator
+					.hasNext();) {
+				String key = (String) iterator.next();
+				query.setParameter(Integer.parseInt(key), map.get(key));
+				queryC.setParameter(Integer.parseInt(key), map.get(key));
+			}
+			query.setFirstResult(paging.getPageSize()
+					* (paging.getPageNo() - 1));
+			query.setMaxResults(paging.getPageSize());
+			List list = query.list();
+
+			int count = Integer.parseInt(queryC.uniqueResult().toString());
+			transList.add(list);
+			transList.add(count + "");
+			return transList;
+		} catch (Exception re) {
+			re.printStackTrace();
+		}
+		return null;
+	}
+
+	public void insertTemCallDetailRecord(
+			TemCallDetailRecord temCallDetailRecord) {
+		Session session = sessionAnnotationFactory.getCurrentSession();
+		try {
+			session.save(temCallDetailRecord);
+		} finally {
+			if (session != null) {
+				session = null;
+			}
+		}
+	}
+
+	public void updateTemCallDetailRecord(
+			TemCallDetailRecord temCallDetailRecord) {
+		Session session = sessionAnnotationFactory.getCurrentSession();
+		try {
+			session.update(temCallDetailRecord);
+		} catch (Exception e) {
+			// TODO: handle exception
+		} finally {
+			if (session != null) {
+				session = null;
+			}
+		}
+	}
+
+	public void deleteTemCallDetailRecord(
+			TemCallDetailRecord temCallDetailRecord) {
+		Session session = sessionAnnotationFactory.getCurrentSession();
+		try {
+			session.delete(temCallDetailRecord);
+		} finally {
+			if (session != null) {
+				session = null;
+			}
+		}
+	}
+
+	public List searchTemCallDetailRecord(
+			TemCallDetailRecord temCallDetailRecord, Paging paging) {
+		List transList = new ArrayList();
+		Session session = null;
+		try {
+			session = sessionAnnotationFactory.getCurrentSession();
+			StringBuffer queryStr = new StringBuffer(
+					"from TemCallDetailRecord temCallDetailRecord ");
+			StringBuffer queryCount = new StringBuffer(
+					"select count(temCallDetailRecord.temCallDetailRecordPk.tcdrMsIsdnFrom) from  TemCallDetailRecord temCallDetailRecord ");
+			Map map = new HashMap();
+			boolean haveCondition = false;
+			int paramindex = 0;
+
+			String tcdrMsIsdnTo = temCallDetailRecord.getTcdrMsIsdnTo();
+//			TemType temType = temCallDetailRecord.getTemType();
+			TemCallDetailRecordPk temCallDetailRecordPk = temCallDetailRecord.getTemCallDetailRecordPk();
+
+			if (tcdrMsIsdnTo != null && tcdrMsIsdnTo.trim().length() > 0) {
+				queryStr.append((haveCondition ? " and " : " where ")
+						+ " temCallDetailRecord.tcdrMsIsdnTo=? ");
+				queryCount.append((haveCondition ? " and " : " where ")
+						+ " temCallDetailRecord.tcdrMsIsdnTo=? ");
+				map.put("" + paramindex++, tcdrMsIsdnTo);
+				haveCondition = true;
+			}
+//			if (temType != null && temType.getTtId() != null) {
+//				queryStr.append((haveCondition ? " and " : " where ")
+//						+ " temCallDetailRecord.temType.ttId=? ");
+//				queryCount.append((haveCondition ? " and " : " where ")
+//						+ " temCallDetailRecord.temType.ttId=? ");
+//				map.put("" + paramindex++, temType.getTtId());
+//				haveCondition = true;
+//			}
+			if (temCallDetailRecordPk != null && temCallDetailRecordPk.getTcdrMsIsdnFrom() != null && temCallDetailRecordPk.getTcdrMsIsdnFrom().trim().length() > 0) {
+				queryStr.append((haveCondition ? " and " : " where ")
+						+ " temCallDetailRecord.temCallDetailRecordPk.tcdrMsIsdnFrom=? ");
+				queryCount.append((haveCondition ? " and " : " where ")
+						+ " temCallDetailRecord.temCallDetailRecordPk.tcdrMsIsdnFrom=? ");
+				map.put("" + paramindex++, temCallDetailRecordPk.getTcdrMsIsdnFrom());
+				haveCondition = true;
+			}
+			if (paging.getOrderBy() != null
+					&& paging.getOrderBy().trim().length() > 0) {
+				queryStr.append(" Order By temCallDetailRecord." + paging.getOrderBy()
+						+ " asc");
+			}
+			Query query = session.createQuery(queryStr.toString());
+			Query queryC = session.createQuery(queryCount.toString());
+			for (Iterator iterator = map.keySet().iterator(); iterator
+					.hasNext();) {
+				String key = (String) iterator.next();
+				query.setParameter(Integer.parseInt(key), map.get(key));
+				queryC.setParameter(Integer.parseInt(key), map.get(key));
+			}
+			query.setFirstResult(paging.getPageSize()
+					* (paging.getPageNo() - 1));
+			query.setMaxResults(paging.getPageSize());
+			List list = query.list();
+
+			int count = Integer.parseInt(queryC.uniqueResult().toString());
+			transList.add(list);
+			transList.add(count + "");
+			return transList;
+		} catch (Exception re) {
+			re.printStackTrace();
+		}
+		return null;
+	}
+
+	public void insertTemMsIsdnPackageDetail(
+			TemMsIsdnPackageDetail temMsIsdnPackageDetail) {
+		Session session = sessionAnnotationFactory.getCurrentSession();
+		try {
+			session.save(temMsIsdnPackageDetail);
+		} finally {
+			if (session != null) {
+				session = null;
+			}
+		}
+	}
+
+	public void updateTemMsIsdnPackageDetail(
+			TemMsIsdnPackageDetail temMsIsdnPackageDetail) {
+		Session session = sessionAnnotationFactory.getCurrentSession();
+		try {
+			session.update(temMsIsdnPackageDetail);
+		} catch (Exception e) {
+			// TODO: handle exception
+		} finally {
+			if (session != null) {
+				session = null;
+			}
+		}
+	}
+
+	public void deleteTemMsIsdnPackageDetail(
+			TemMsIsdnPackageDetail temMsIsdnPackageDetail) {
+		Session session = sessionAnnotationFactory.getCurrentSession();
+		try {
+			session.delete(temMsIsdnPackageDetail);
+		} finally {
+			if (session != null) {
+				session = null;
+			}
+		}
+	}
+
+	public List searchTemMsIsdnPackageDetail(
+			TemMsIsdnPackageDetail temMsIsdnPackageDetail, Paging paging) {
+		List transList = new ArrayList();
+		Session session = null;
+		try {
+			session = sessionAnnotationFactory.getCurrentSession();
+			StringBuffer queryStr = new StringBuffer(
+					"from TemMsIsdnPackageDetail temMsIsdnPackageDetail ");
+			StringBuffer queryCount = new StringBuffer(
+					"select count(temMsIsdnPackageDetail.temMsIsdnPackageDetailPk.msIsdn) from  TemMsIsdnPackageDetail temMsIsdnPackageDetail ");
+			Map map = new HashMap();
+			boolean haveCondition = false;
+			int paramindex = 0;
+
+			TemMsIsdnPackageDetailPk temMsIsdnPackageDetailPk = temMsIsdnPackageDetail.getTemMsIsdnPackageDetailPk();
+
+			if (temMsIsdnPackageDetailPk != null && temMsIsdnPackageDetailPk.getMsIsdn() != null && temMsIsdnPackageDetailPk.getMsIsdn().trim().length() > 0) {
+				queryStr.append((haveCondition ? " and " : " where ")
+						+ " temMsIsdnPackageDetail.temMsIsdnPackageDetailPk.msIsdn=? ");
+				queryCount.append((haveCondition ? " and " : " where ")
+						+ " temMsIsdnPackageDetail.temMsIsdnPackageDetailPk.msIsdn=? ");
+				map.put("" + paramindex++, temMsIsdnPackageDetailPk.getMsIsdn());
+				haveCondition = true;
+			}
+			if (temMsIsdnPackageDetailPk != null && temMsIsdnPackageDetailPk.getTpdId() != null) {
+				queryStr.append((haveCondition ? " and " : " where ")
+						+ " temMsIsdnPackageDetail.temPackageDetail.tpdId=? ");
+				queryCount.append((haveCondition ? " and " : " where ")
+						+ " temMsIsdnPackageDetail.temPackageDetail.tpdId=? ");
+				map.put("" + paramindex++, temMsIsdnPackageDetailPk.getTpdId());
+				haveCondition = true;
+			}
+			if (paging.getOrderBy() != null
+					&& paging.getOrderBy().trim().length() > 0) {
+				queryStr.append(" Order By temMsIsdnPackageDetail." + paging.getOrderBy()
 						+ " asc");
 			}
 			Query query = session.createQuery(queryStr.toString());

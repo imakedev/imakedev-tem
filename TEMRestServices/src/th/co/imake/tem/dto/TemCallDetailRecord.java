@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 @XStreamAlias("temCallDetailRecordDTO")
-public class TemCallDetailRecord implements Serializable {
+public class TemCallDetailRecord extends BaseDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@XStreamAlias("tcdrMsIsdnFrom")
 	private String tcdrMsIsdnFrom;
