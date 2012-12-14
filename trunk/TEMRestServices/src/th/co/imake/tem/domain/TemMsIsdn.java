@@ -1,6 +1,7 @@
 package th.co.imake.tem.domain;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,12 +16,16 @@ import javax.persistence.Table;
 public class TemMsIsdn implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "MSISDN")
 	private String msIsdn;
 	@ManyToOne
 	@JoinColumn(name = "TC_ID")
 	private TemCompany temCompany;
+	@ManyToOne
+	@JoinColumn(name = "TP_ID")
+	private TemProvider temProvider;
+	@Column(name = "ON_THE_BILL")
+	private Date onTheBill;
 
 	public String getMsIsdn() {
 		return msIsdn;
@@ -38,4 +43,20 @@ public class TemMsIsdn implements Serializable {
 		this.temCompany = temCompany;
 	}
 
+	public Date getOnTheBill() {
+		return onTheBill;
+	}
+
+	public void setOnTheBill(Date onTheBill) {
+		this.onTheBill = onTheBill;
+	}
+
+	public TemProvider getTemProvider() {
+		return temProvider;
+	}
+
+	public void setTemProvider(TemProvider temProvider) {
+		this.temProvider = temProvider;
+	}
+	
 }

@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 @Entity
@@ -26,7 +27,7 @@ public class TemPackageDetail implements Serializable {
 	@Column(name = "TPD_DATA_PRICE")
 	private String tpdDataPrice;
 	@ManyToOne
-	@Column(name = "TPT_ID")
+	@JoinColumn(name = "TPT_ID")
 	private TemPackageType temPackageType;
 
 	public Integer getTpdId() {

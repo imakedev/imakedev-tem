@@ -3,7 +3,10 @@ package th.co.imake.tem.domain;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Embeddable
 public class TemCallDetailRecordPk implements Serializable {

@@ -1,7 +1,9 @@
 package th.co.imake.tem.application;
 
 import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.restlet.Component;
@@ -10,12 +12,15 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import th.co.imake.tem.domain.TemCallDetailRecord;
 import th.co.imake.tem.domain.TemCallDetailRecordPk;
+import th.co.imake.tem.domain.TemCompany;
+import th.co.imake.tem.domain.TemMsIsdn;
 import th.co.imake.tem.domain.TemMsIsdnPackageDetail;
 import th.co.imake.tem.domain.TemMsIsdnPackageDetailPk;
 import th.co.imake.tem.domain.TemProvider;
 import th.co.imake.tem.domain.TemSpecialList;
 import th.co.imake.tem.domain.TemSpecialListPk;
 import th.co.imake.tem.domain.TemType;
+import th.co.imake.tem.migratedata.MigrateData;
 import th.co.imake.tem.service.TemService;
 import th.co.imake.tem.util.Paging;
 
@@ -35,22 +40,38 @@ public class Main {
 		
 //		saveTemProvider(temService);
 //		searchTemProvider(temService);
-		
+//		
 //		saveTemType(temService);
 //		searchTemType(temService);
+//		
+//		saveTemCompany(temService);
+//		searchTemCompany(temService);
+//		
+//		saveTemMsIsdn(temService);
+//		searchTemMsIsdn(temService);
 		
 //		saveTemSpecialList(temService);
 //		searchTemSpecialList(temService);
 		
-		saveTemCallDetailRecord(temService);
-		searchTemCallDetailRecord(temService);
+//		saveTemCallDetailRecord(temService);
+//		searchTemCallDetailRecord(temService);
+//		MigrateData migrateData = new MigrateData();
+//		migrateData.migrateData(temService);
+		
+		temService.migrateData();
 		
 	}
 	
-	public static void saveTemProvider(TemService temService) {
+	/*public static void saveTemProvider(TemService temService) {
 		TemProvider temProvider = new TemProvider();
-		temProvider.setTpName("AIS");
+		temProvider.setTpName("True");
+		TemProvider temProvider2 = new TemProvider();
+		temProvider2.setTpName("Dtac");
+		TemProvider temProvider3 = new TemProvider();
+		temProvider3.setTpName("AIS");
 		temService.insertTemProvider(temProvider);
+		temService.insertTemProvider(temProvider2);
+		temService.insertTemProvider(temProvider3);
 	}
 	
 	public static void searchTemProvider(TemService temService) {
@@ -68,8 +89,14 @@ public class Main {
 	
 	public static void saveTemType(TemService temService) {
 		TemType temType = new TemType();
-		temType.setTtName("Data");
+		temType.setTtName("Call");
+		TemType temType2 = new TemType();
+		temType2.setTtName("SMS");
+		TemType temType3 = new TemType();
+		temType3.setTtName("Data");
 		temService.insertTemType(temType);
+		temService.insertTemType(temType2);
+		temService.insertTemType(temType3);
 	}
 	
 	public static void searchTemType(TemService temService) {
@@ -81,6 +108,50 @@ public class Main {
 			for(int i=0;i<listObj.size();i++) {
 				temType = (TemType)listObj.get(i);
 				System.out.println(temType.getTtId()+" : "+temType.getTtName());
+			}
+		}
+	}
+	
+	public static void saveTemCompany(TemService temService) {
+		TemCompany temCompany = new TemCompany();
+		temCompany.setTcName("VLink");
+		temService.insertTemCompany(temCompany);
+	}
+	
+	public static void searchTemCompany(TemService temService) {
+		TemCompany temCompany = new TemCompany();
+		Paging paging = new Paging();
+		List list = temService.searchTemCompany(temCompany, paging);
+		if(list != null && list.size() == 2) {
+			List listObj = (List)list.get(0);
+			for(int i=0;i<listObj.size();i++) {
+				temCompany = (TemCompany)listObj.get(i);
+				System.out.println(temCompany.getTcId()+" : "+temCompany.getTcName());
+			}
+		}
+	}
+	
+	public static void saveTemMsIsdn(TemService temService) {
+		TemMsIsdn temMsIsdn = new TemMsIsdn();
+		TemCompany temCompany = new TemCompany();
+		temCompany.setTcId(1);
+		temMsIsdn.setTemCompany(temCompany);
+		temMsIsdn.setMsIsdn("027197999");
+		Calendar calendar = new GregorianCalendar();
+		calendar.set(Calendar.DATE, calendar.getActualMaximum(Calendar.DATE));
+		temMsIsdn.setOnTheBill(new java.sql.Date(calendar.getTime().getTime()));
+		temService.insertTemMsIsdn(temMsIsdn);
+	}
+	
+	public static void searchTemMsIsdn(TemService temService) {
+		TemMsIsdn temMsIsdn = new TemMsIsdn();
+		Paging paging = new Paging();
+		List list = temService.searchTemMsIsdn(temMsIsdn, paging);
+		if(list != null && list.size() == 2) {
+			List listObj = (List)list.get(0);
+			for(int i=0;i<listObj.size();i++) {
+				temMsIsdn = (TemMsIsdn)listObj.get(i);
+				System.out.println(temMsIsdn.getMsIsdn()+" : "+temMsIsdn.getOnTheBill());
 			}
 		}
 	}
@@ -109,12 +180,16 @@ public class Main {
 	}
 	
 	public static void saveTemCallDetailRecord(TemService temService) {
+		TemMsIsdn msIsdnFrom = new TemMsIsdn();
+		msIsdnFrom.setMsIsdn("0812138998");
+		TemMsIsdn msIsdnTo = new TemMsIsdn();
+		msIsdnTo.setMsIsdn("027197999");
 		TemCallDetailRecord temCallDetailRecord = new TemCallDetailRecord();
 		TemCallDetailRecordPk temCallDetailRecordPk = new TemCallDetailRecordPk();
-		temCallDetailRecordPk.setTcdrMsIsdnFrom("0800000002");
+		temCallDetailRecordPk.setTcdrMsIsdnFrom("0812138998");
 		temCallDetailRecordPk.setTcdrUsedTime(new Timestamp(new Date().getTime()));
 		temCallDetailRecordPk.setTtId(1);
-		temCallDetailRecord.setTcdrMsIsdnTo("0869999999");
+		temCallDetailRecord.setTcdrMsIsdnTo(msIsdnTo);
 		temCallDetailRecord.setTcdrUsedCount(1.0);
 		temCallDetailRecord.setTemCallDetailRecordPk(temCallDetailRecordPk);
 		temService.insertTemCallDetailRecord(temCallDetailRecord);
@@ -126,10 +201,11 @@ public class Main {
 		List list = temService.searchTemCallDetailRecord(temCallDetailRecord, paging);
 		if(list != null && list.size() == 2) {
 			List listObj = (List)list.get(0);
+			System.out.println(listObj.size());
 			for(int i=0;i<listObj.size();i++) {
 				temCallDetailRecord = (TemCallDetailRecord)listObj.get(i);
 				TemCallDetailRecordPk temCallDetailRecordPk = temCallDetailRecord.getTemCallDetailRecordPk();
-				System.out.println(temCallDetailRecordPk.getTcdrMsIsdnFrom()+" : "+temCallDetailRecordPk.getTcdrUsedTime());
+				System.out.println(temCallDetailRecordPk.getTcdrMsIsdnFrom()+" : "+temCallDetailRecord.getTcdrMsIsdnTo().getMsIsdn()+" : "+temCallDetailRecordPk.getTcdrUsedTime());
 			}
 		}
 	}
@@ -155,5 +231,5 @@ public class Main {
 				System.out.println(temMsIsdnPackageDetailPk.getMsIsdn()+" : "+temMsIsdnPackageDetailPk.getTpdId());
 			}
 		}
-	}
+	}*/
 }

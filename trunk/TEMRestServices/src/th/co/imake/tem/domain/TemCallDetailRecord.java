@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -14,6 +15,7 @@ public class TemCallDetailRecord implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	private TemCallDetailRecordPk temCallDetailRecordPk;
+//	@ManyToOne
 	@Column(name = "TCDR_MSISDN_TO")
 	private String tcdrMsIsdnTo;
 	@Column(name = "TCDR_USED_COUNT")
