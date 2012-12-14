@@ -41,7 +41,7 @@
 				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
 				<prop key="hibernate.generate_statistics">${hibernate.generate_statistics}</prop>	
 				<prop key="hibernate.connection.autocommit">false</prop>
-<!-- 				<prop key="hibernate.hbm2ddl.auto">create</prop> -->
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
 			</props>	
 		</property>
   		 <!-- 
@@ -53,15 +53,17 @@
    		 -->
    		 <property name="annotatedClasses">
      		<list> 
+     			<value>th.co.imake.tem.domain.TemProvider</value>
+     			<value>th.co.imake.tem.domain.TemType</value>
+     			<value>th.co.imake.tem.domain.TemCompany</value>
+     			<value>th.co.imake.tem.domain.TemMsIsdn</value>
       	 		<value>th.co.imake.tem.domain.TemCallDetailRecord</value>
-      	 		<value>th.co.imake.tem.domain.TemCompany</value>
-      	 		<value>th.co.imake.tem.domain.TemMsIsdn</value>
-      	 		<value>th.co.imake.tem.domain.TemMsIsdnPackageDetail</value>
-      	 		<value>th.co.imake.tem.domain.TemPackageDetail</value>
-      	 		<value>th.co.imake.tem.domain.TemPackageType</value>
-				<value>th.co.imake.tem.domain.TemProvider</value>
-				<value>th.co.imake.tem.domain.TemSpecialList</value>
-      	 		<value>th.co.imake.tem.domain.TemType</value>
+      	 		
+<!--       	 		<value>th.co.imake.tem.domain.TemMsIsdnPackageDetail</value> -->
+<!--       	 		<value>th.co.imake.tem.domain.TemPackageDetail</value> -->
+<!--       	 		<value>th.co.imake.tem.domain.TemPackageType</value> -->
+<!-- 				<value>th.co.imake.tem.domain.TemSpecialList</value> -->
+      	 		
 			 </list>
    		</property>
    		<property name="eventListeners">

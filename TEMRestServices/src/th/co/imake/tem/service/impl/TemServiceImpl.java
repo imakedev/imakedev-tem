@@ -1,5 +1,6 @@
 package th.co.imake.tem.service.impl;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -9,6 +10,7 @@ import java.util.Map;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,8 +26,11 @@ import th.co.imake.tem.domain.TemProvider;
 import th.co.imake.tem.domain.TemSpecialList;
 import th.co.imake.tem.domain.TemSpecialListPk;
 import th.co.imake.tem.domain.TemType;
+import th.co.imake.tem.migratedata.MigrateData;
+import th.co.imake.tem.migratedata.form.CDRTemplate;
 import th.co.imake.tem.service.TemService;
 import th.co.imake.tem.util.Paging;
+import th.co.imake.tem.util.Util;
 
 @Repository
 @Transactional
@@ -42,47 +47,25 @@ public class TemServiceImpl implements TemService {
 		this.sessionAnnotationFactory = sessionAnnotationFactory;
 	}
 
-	public void insertTemType(TemType temType) {
-		Session session = sessionAnnotationFactory.getCurrentSession();
-		try {
+	public void insertTemType(Session session, TemType temType) {
+			session.beginTransaction();
+			Transaction transaction = session.getTransaction();
 			session.save(temType);
-		} finally {
-			if (session != null) {
-				session = null;
-			}
-		}
+			transaction.commit();
 	}
 
-	public void updateTemType(TemType temType) {
-		Session session = sessionAnnotationFactory.getCurrentSession();
-		try {
+	public void updateTemType(Session session, TemType temType) {
 			session.update(temType);
-		} catch (Exception e) {
-			// TODO: handle exception
-		} finally {
-			if (session != null) {
-				session = null;
-			}
-		}
 	}
 
-	public void deleteTemType(TemType temType) {
-		Session session = sessionAnnotationFactory.getCurrentSession();
-		try {
+	public void deleteTemType(Session session, TemType temType) {
 			session.delete(temType);
-		} finally {
-			if (session != null) {
-				session = null;
-			}
-		}
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public List searchTemType(TemType temType, Paging paging) {
+	public List searchTemType(Session session, TemType temType, Paging paging) {
 		List transList = new ArrayList();
-		Session session = null;
 		try {
-			session = sessionAnnotationFactory.getCurrentSession();
 			StringBuffer queryStr = new StringBuffer("from TemType temType ");
 			StringBuffer queryCount = new StringBuffer(
 					"select count(temType) from  TemType temType ");
@@ -137,47 +120,26 @@ public class TemServiceImpl implements TemService {
 		return null;
 	}
 
-	public void insertTemCompany(TemCompany temCompany) {
-		Session session = sessionAnnotationFactory.getCurrentSession();
-		try {
+	public void insertTemCompany(Session session, TemCompany temCompany) {
+			session.beginTransaction();
+			Transaction transaction = session.getTransaction();
 			session.save(temCompany);
-		} finally {
-			if (session != null) {
-				session = null;
-			}
-		}
+			transaction.commit();
 	}
 
-	public void updateTemCompany(TemCompany temCompany) {
-		Session session = sessionAnnotationFactory.getCurrentSession();
-		try {
+	public void updateTemCompany(Session session, TemCompany temCompany) {
 			session.update(temCompany);
-		} catch (Exception e) {
-			// TODO: handle exception
-		} finally {
-			if (session != null) {
-				session = null;
-			}
-		}
 	}
 
-	public void deleteTemCompany(TemCompany temCompany) {
-		Session session = sessionAnnotationFactory.getCurrentSession();
-		try {
+	public void deleteTemCompany(Session session, TemCompany temCompany) {
 			session.delete(temCompany);
-		} finally {
-			if (session != null) {
-				session = null;
-			}
-		}
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public List searchTemCompany(TemCompany temCompany, Paging paging) {
+	public List searchTemCompany(Session session, TemCompany temCompany, Paging paging) {
 		List transList = new ArrayList();
-		Session session = null;
 		try {
-			session = sessionAnnotationFactory.getCurrentSession();
+			session = sessionAnnotationFactory.openSession();
 			StringBuffer queryStr = new StringBuffer(
 					"from TemCompany temCompany ");
 			StringBuffer queryCount = new StringBuffer(
@@ -233,47 +195,26 @@ public class TemServiceImpl implements TemService {
 		return null;
 	}
 
-	public void insertTemMsIsdn(TemMsIsdn temMsIsdn) {
-		Session session = sessionAnnotationFactory.getCurrentSession();
-		try {
+	public void insertTemMsIsdn(Session session, TemMsIsdn temMsIsdn) {
+			session.beginTransaction();
+			Transaction transaction = session.getTransaction();
 			session.save(temMsIsdn);
-		} finally {
-			if (session != null) {
-				session = null;
-			}
-		}
+			transaction.commit();
 	}
 
-	public void updateTemMsIsdn(TemMsIsdn temMsIsdn) {
-		Session session = sessionAnnotationFactory.getCurrentSession();
-		try {
+	public void updateTemMsIsdn(Session session, TemMsIsdn temMsIsdn) {
 			session.update(temMsIsdn);
-		} catch (Exception e) {
-			// TODO: handle exception
-		} finally {
-			if (session != null) {
-				session = null;
-			}
-		}
 	}
 
-	public void deleteTemMsIsdn(TemMsIsdn temMsIsdn) {
-		Session session = sessionAnnotationFactory.getCurrentSession();
-		try {
+	public void deleteTemMsIsdn(Session session, TemMsIsdn temMsIsdn) {
 			session.delete(temMsIsdn);
-		} finally {
-			if (session != null) {
-				session = null;
-			}
-		}
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public List searchTemMsIsdn(TemMsIsdn temMsIsdn, Paging paging) {
+	public List searchTemMsIsdn(Session session, TemMsIsdn temMsIsdn, Paging paging) {
 		List transList = new ArrayList();
-		Session session = null;
 		try {
-			session = sessionAnnotationFactory.getCurrentSession();
+			session = sessionAnnotationFactory.openSession();
 			StringBuffer queryStr = new StringBuffer(
 					"from TemMsIsdn temMsIsdn ");
 			StringBuffer queryCount = new StringBuffer(
@@ -330,7 +271,7 @@ public class TemServiceImpl implements TemService {
 	}
 
 	public void insertTemPackageType(TemPackageType temPackageType) {
-		Session session = sessionAnnotationFactory.getCurrentSession();
+		Session session = sessionAnnotationFactory.openSession();
 		try {
 			session.save(temPackageType);
 		} finally {
@@ -341,7 +282,7 @@ public class TemServiceImpl implements TemService {
 	}
 
 	public void updateTemPackageType(TemPackageType temPackageType) {
-		Session session = sessionAnnotationFactory.getCurrentSession();
+		Session session = sessionAnnotationFactory.openSession();
 		try {
 			session.update(temPackageType);
 		} catch (Exception e) {
@@ -354,7 +295,7 @@ public class TemServiceImpl implements TemService {
 	}
 
 	public void deleteTemPackageType(TemPackageType temPackageType) {
-		Session session = sessionAnnotationFactory.getCurrentSession();
+		Session session = sessionAnnotationFactory.openSession();
 		try {
 			session.delete(temPackageType);
 		} finally {
@@ -370,7 +311,7 @@ public class TemServiceImpl implements TemService {
 		List transList = new ArrayList();
 		Session session = null;
 		try {
-			session = sessionAnnotationFactory.getCurrentSession();
+			session = sessionAnnotationFactory.openSession();
 			StringBuffer queryStr = new StringBuffer(
 					"from TemType temPackageType ");
 			StringBuffer queryCount = new StringBuffer(
@@ -435,47 +376,25 @@ public class TemServiceImpl implements TemService {
 		return null;
 	}
 
-	public void insertTemProvider(TemProvider temProvider) {
-		Session session = sessionAnnotationFactory.getCurrentSession();
-		try {
+	public void insertTemProvider(Session session, TemProvider temProvider) {
+			session.beginTransaction();
+			Transaction transaction = session.getTransaction();
 			session.save(temProvider);
-		} finally {
-			if (session != null) {
-				session = null;
-			}
-		}
+			transaction.commit();
 	}
 
-	public void updateTemProvider(TemProvider temProvider) {
-		Session session = sessionAnnotationFactory.getCurrentSession();
-		try {
+	public void updateTemProvider(Session session, TemProvider temProvider) {
 			session.update(temProvider);
-		} catch (Exception e) {
-			// TODO: handle exception
-		} finally {
-			if (session != null) {
-				session = null;
-			}
-		}
 	}
 
-	public void deleteTemProvider(TemProvider temProvider) {
-		Session session = sessionAnnotationFactory.getCurrentSession();
-		try {
+	public void deleteTemProvider(Session session, TemProvider temProvider) {
 			session.delete(temProvider);
-		} finally {
-			if (session != null) {
-				session = null;
-			}
-		}
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public List searchTemProvider(TemProvider temProvider, Paging paging) {
+	public List searchTemProvider(Session session, TemProvider temProvider, Paging paging) {
 		List transList = new ArrayList();
-		Session session = null;
 		try {
-			session = sessionAnnotationFactory.getCurrentSession();
 			StringBuffer queryStr = new StringBuffer(
 					"from TemProvider temProvider ");
 			StringBuffer queryCount = new StringBuffer(
@@ -532,7 +451,7 @@ public class TemServiceImpl implements TemService {
 	}
 
 	public void insertTemSpecialList(TemSpecialList temSpecialList) {
-		Session session = sessionAnnotationFactory.getCurrentSession();
+		Session session = sessionAnnotationFactory.openSession();
 		try {
 			session.save(temSpecialList);
 		} finally {
@@ -543,7 +462,7 @@ public class TemServiceImpl implements TemService {
 	}
 
 	public void updateTemSpecialList(TemSpecialList temSpecialList) {
-		Session session = sessionAnnotationFactory.getCurrentSession();
+		Session session = sessionAnnotationFactory.openSession();
 		try {
 			session.update(temSpecialList);
 		} catch (Exception e) {
@@ -556,7 +475,7 @@ public class TemServiceImpl implements TemService {
 	}
 
 	public void deleteTemSpecialList(TemSpecialList temSpecialList) {
-		Session session = sessionAnnotationFactory.getCurrentSession();
+		Session session = sessionAnnotationFactory.openSession();
 		try {
 			session.delete(temSpecialList);
 		} finally {
@@ -571,7 +490,7 @@ public class TemServiceImpl implements TemService {
 		List transList = new ArrayList();
 		Session session = null;
 		try {
-			session = sessionAnnotationFactory.getCurrentSession();
+			session = sessionAnnotationFactory.openSession();
 			StringBuffer queryStr = new StringBuffer(
 					"from TemSpecialList temSpecialList ");
 			StringBuffer queryCount = new StringBuffer(
@@ -629,7 +548,7 @@ public class TemServiceImpl implements TemService {
 	}
 
 	public void insertTemPackageDetail(TemPackageDetail temPackageDetail) {
-		Session session = sessionAnnotationFactory.getCurrentSession();
+		Session session = sessionAnnotationFactory.openSession();
 		try {
 			session.save(temPackageDetail);
 		} finally {
@@ -640,7 +559,7 @@ public class TemServiceImpl implements TemService {
 	}
 
 	public void updateTemPackageDetail(TemPackageDetail temPackageDetail) {
-		Session session = sessionAnnotationFactory.getCurrentSession();
+		Session session = sessionAnnotationFactory.openSession();
 		try {
 			session.update(temPackageDetail);
 		} catch (Exception e) {
@@ -653,7 +572,7 @@ public class TemServiceImpl implements TemService {
 	}
 
 	public void deleteTemPackageDetail(TemPackageDetail temPackageDetail) {
-		Session session = sessionAnnotationFactory.getCurrentSession();
+		Session session = sessionAnnotationFactory.openSession();
 		try {
 			session.delete(temPackageDetail);
 		} finally {
@@ -668,7 +587,7 @@ public class TemServiceImpl implements TemService {
 		List transList = new ArrayList();
 		Session session = null;
 		try {
-			session = sessionAnnotationFactory.getCurrentSession();
+			session = sessionAnnotationFactory.openSession();
 			StringBuffer queryStr = new StringBuffer(
 					"from TemPackageDetail temPackageDetail ");
 			StringBuffer queryCount = new StringBuffer(
@@ -733,50 +652,28 @@ public class TemServiceImpl implements TemService {
 		return null;
 	}
 
-	public void insertTemCallDetailRecord(
+	public void insertTemCallDetailRecord(Session session, 
 			TemCallDetailRecord temCallDetailRecord) {
-		Session session = sessionAnnotationFactory.getCurrentSession();
-		try {
+			session.beginTransaction();
+			Transaction transaction = session.getTransaction();
 			session.save(temCallDetailRecord);
-		} finally {
-			if (session != null) {
-				session = null;
-			}
-		}
+			transaction.commit();
 	}
 
-	public void updateTemCallDetailRecord(
+	public void updateTemCallDetailRecord(Session session, 
 			TemCallDetailRecord temCallDetailRecord) {
-		Session session = sessionAnnotationFactory.getCurrentSession();
-		try {
 			session.update(temCallDetailRecord);
-		} catch (Exception e) {
-			// TODO: handle exception
-		} finally {
-			if (session != null) {
-				session = null;
-			}
-		}
 	}
 
-	public void deleteTemCallDetailRecord(
+	public void deleteTemCallDetailRecord(Session session, 
 			TemCallDetailRecord temCallDetailRecord) {
-		Session session = sessionAnnotationFactory.getCurrentSession();
-		try {
 			session.delete(temCallDetailRecord);
-		} finally {
-			if (session != null) {
-				session = null;
-			}
-		}
 	}
 
-	public List searchTemCallDetailRecord(
+	public List searchTemCallDetailRecord(Session session, 
 			TemCallDetailRecord temCallDetailRecord, Paging paging) {
 		List transList = new ArrayList();
-		Session session = null;
 		try {
-			session = sessionAnnotationFactory.getCurrentSession();
 			StringBuffer queryStr = new StringBuffer(
 					"from TemCallDetailRecord temCallDetailRecord ");
 			StringBuffer queryCount = new StringBuffer(
@@ -786,6 +683,7 @@ public class TemServiceImpl implements TemService {
 			int paramindex = 0;
 
 			String tcdrMsIsdnTo = temCallDetailRecord.getTcdrMsIsdnTo();
+//			String tcdrMsIsdnTo = temCallDetailRecord.getTcdrMsIsdnTo() != null?temCallDetailRecord.getTcdrMsIsdnTo().getMsIsdn():null;
 //			TemType temType = temCallDetailRecord.getTemType();
 			TemCallDetailRecordPk temCallDetailRecordPk = temCallDetailRecord.getTemCallDetailRecordPk();
 
@@ -843,7 +741,7 @@ public class TemServiceImpl implements TemService {
 
 	public void insertTemMsIsdnPackageDetail(
 			TemMsIsdnPackageDetail temMsIsdnPackageDetail) {
-		Session session = sessionAnnotationFactory.getCurrentSession();
+		Session session = sessionAnnotationFactory.openSession();
 		try {
 			session.save(temMsIsdnPackageDetail);
 		} finally {
@@ -855,7 +753,7 @@ public class TemServiceImpl implements TemService {
 
 	public void updateTemMsIsdnPackageDetail(
 			TemMsIsdnPackageDetail temMsIsdnPackageDetail) {
-		Session session = sessionAnnotationFactory.getCurrentSession();
+		Session session = sessionAnnotationFactory.openSession();
 		try {
 			session.update(temMsIsdnPackageDetail);
 		} catch (Exception e) {
@@ -869,7 +767,7 @@ public class TemServiceImpl implements TemService {
 
 	public void deleteTemMsIsdnPackageDetail(
 			TemMsIsdnPackageDetail temMsIsdnPackageDetail) {
-		Session session = sessionAnnotationFactory.getCurrentSession();
+		Session session = sessionAnnotationFactory.openSession();
 		try {
 			session.delete(temMsIsdnPackageDetail);
 		} finally {
@@ -884,7 +782,7 @@ public class TemServiceImpl implements TemService {
 		List transList = new ArrayList();
 		Session session = null;
 		try {
-			session = sessionAnnotationFactory.getCurrentSession();
+			session = sessionAnnotationFactory.openSession();
 			StringBuffer queryStr = new StringBuffer(
 					"from TemMsIsdnPackageDetail temMsIsdnPackageDetail ");
 			StringBuffer queryCount = new StringBuffer(
@@ -937,6 +835,93 @@ public class TemServiceImpl implements TemService {
 			re.printStackTrace();
 		}
 		return null;
+	}
+	
+	public void migrateData() {
+		List list = new MigrateData().readExcel(Util.getProperty("MIGRATE_DATA_FILE"));
+		Paging paging = new Paging();
+		TemType temType = new TemType();
+		Session session = sessionAnnotationFactory.openSession();
+		List listType = searchTemType(session, temType, paging);
+		TemProvider temProvider = new TemProvider();
+		List listProvider = searchTemProvider(session, temProvider, paging);
+		TemCompany temCompany = new TemCompany();
+		List listCompany = searchTemCompany(session, temCompany, paging);
+//		System.out.println(list.size());
+		for(int i=0;i<list.size();i++) {
+			CDRTemplate cdrTemplate = (CDRTemplate)list.get(i);
+//			System.out.println(cdrTemplate.getMsIsdnFrom()+"\t"+cdrTemplate.getMsIsdnTo());
+			if(cdrTemplate.getMsIsdnFrom() != null && cdrTemplate.getMsIsdnFrom().trim().length() > 0) {
+				TemMsIsdn temMsIsdn = new TemMsIsdn();
+				temMsIsdn.setMsIsdn(cdrTemplate.getMsIsdnFrom());
+				List list2 = searchTemMsIsdn(session, temMsIsdn, paging);
+//				System.out.println(list2+" : "+list2.size()+" : "+(Integer)list2.get(1));
+				if(list2 != null && list2.size() == 2 && (Integer.parseInt(list2.get(1).toString())) > 0) {
+				} else {
+					int providerSize = Integer.parseInt(listProvider.get(1).toString());
+					List providers = (List)listProvider.get(0);
+					for(int j=0;j<providerSize;j++) {
+						TemProvider provider = (TemProvider)providers.get(j);
+						if(cdrTemplate.getMsIsdnFromProvider().equalsIgnoreCase(provider.getTpName())) {
+							temMsIsdn.setTemProvider(provider);
+							break;
+						}
+					}
+					int companySize = Integer.parseInt(listCompany.get(1).toString());
+					List companys = (List)listCompany.get(0);
+					for(int j=0;j<companySize;j++) {
+						TemCompany company = (TemCompany)companys.get(j);
+						if(cdrTemplate.getMsIsdnFromCompany() != null && cdrTemplate.getMsIsdnFromCompany().trim().length() > 0 && cdrTemplate.getMsIsdnFromCompany().equalsIgnoreCase(company.getTcName())) {
+							temMsIsdn.setTemCompany(company);
+							break;
+						}
+					}
+					insertTemMsIsdn(session, temMsIsdn);
+				}
+			}
+			
+			if(cdrTemplate.getMsIsdnTo() != null && cdrTemplate.getMsIsdnTo().trim().length() > 0) {
+				TemMsIsdn temMsIsdn = new TemMsIsdn();
+				temMsIsdn.setMsIsdn(cdrTemplate.getMsIsdnTo());
+				List list2 = searchTemMsIsdn(session, temMsIsdn, paging);
+				if(list2 != null && list2.size() == 2 && (Integer.parseInt(list2.get(1).toString())) > 0) {
+//					System.out.println("################## If #######################");
+				} else {
+//					System.out.println("################## Else #######################"+cdrTemplate.getMsIsdnTo()+" : "+cdrTemplate.getMsIsdnToProvider());
+					int providerSize = Integer.parseInt(listProvider.get(1).toString());
+					List providers = (List)listProvider.get(0);
+					for(int j=0;j<providerSize;j++) {
+						TemProvider provider = (TemProvider)providers.get(j);
+						if(cdrTemplate.getMsIsdnToProvider().equalsIgnoreCase(provider.getTpName())) {
+							temMsIsdn.setTemProvider(provider);
+							break;
+						}
+					}
+					insertTemMsIsdn(session, temMsIsdn);
+				}
+			}
+			
+			TemCallDetailRecord temCallDetailRecord = new TemCallDetailRecord();
+//			TemMsIsdn temMsIsdnTo = new TemMsIsdn();
+//			temMsIsdnTo.setMsIsdn(cdrTemplate.getMsIsdnTo());
+			temCallDetailRecord.setTcdrMsIsdnTo(cdrTemplate.getMsIsdnTo());
+			temCallDetailRecord.setTcdrUsedCount(cdrTemplate.getUsedCount());
+			TemCallDetailRecordPk temCallDetailRecordPk = new TemCallDetailRecordPk();
+			temCallDetailRecordPk.setTcdrMsIsdnFrom(cdrTemplate.getMsIsdnFrom());
+			temCallDetailRecordPk.setTcdrUsedTime(new Timestamp(cdrTemplate.getUsedDate().getTime()));
+			int typeSize = Integer.parseInt(listType.get(1).toString());
+			List types = (List)listType.get(0);
+			for(int j=0;j<typeSize;j++) {
+				TemType type = (TemType)types.get(j);
+				if(cdrTemplate.getUsedType().equalsIgnoreCase(type.getTtName())) {
+					temCallDetailRecordPk.setTtId(type.getTtId());
+					break;
+				}
+			}
+			temCallDetailRecord.setTemCallDetailRecordPk(temCallDetailRecordPk);
+			insertTemCallDetailRecord(session, temCallDetailRecord);
+		}
+		session.close();
 	}
 
 }

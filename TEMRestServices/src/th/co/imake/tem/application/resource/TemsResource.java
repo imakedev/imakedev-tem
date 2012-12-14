@@ -69,7 +69,7 @@ public class TemsResource extends BaseResource {
 		InputStream in = null;
 		ResultDTO resultDTO = null;
 		String max_rows = "0";
-		try {
+		/*try {
 			in = entity.getStream();
 			BaseDTO baseDTO = null;
 			Object baseObj = XStreamUtils.getXstream().fromXML(in);
@@ -83,11 +83,11 @@ public class TemsResource extends BaseResource {
 					.equals(serviceName)) {
 				TemCallDetailRecord temCallDetailRecordDTO = (TemCallDetailRecord)baseDTO;
 				th.co.imake.tem.domain.TemCallDetailRecord temCallDetailRecord = new th.co.imake.tem.domain.TemCallDetailRecord();
-				temCallDetailRecord.setTcdrMsIsdnTo(temCallDetailRecordDTO.getTcdrMsIsdnTo());
+//				temCallDetailRecord.setTcdrMsIsdnTo(temCallDetailRecordDTO.getTcdrMsIsdnTo());
 				temCallDetailRecord.setTcdrUsedCount(temCallDetailRecordDTO.getTcdrUsedCount());
 				
 				TemCallDetailRecordPk temCallDetailRecordPk = new TemCallDetailRecordPk();
-				temCallDetailRecordPk.setTcdrMsIsdnFrom(temCallDetailRecordDTO.getTcdrMsIsdnFrom());
+//				temCallDetailRecordPk.setTcdrMsIsdnFrom(temCallDetailRecordDTO.getTcdrMsIsdnFrom());
 				temCallDetailRecordPk.setTcdrUsedTime(temCallDetailRecordDTO.getTcdrUsedTime());
 				if(temCallDetailRecordDTO.getTemType() != null) {
 					temCallDetailRecordPk.setTtId(temCallDetailRecordDTO.getTemType().getTtId());
@@ -98,11 +98,11 @@ public class TemsResource extends BaseResource {
 					.equals(serviceName)) {
 				TemCallDetailRecord temCallDetailRecordDTO = (TemCallDetailRecord)baseDTO;
 				th.co.imake.tem.domain.TemCallDetailRecord temCallDetailRecord = new th.co.imake.tem.domain.TemCallDetailRecord();
-				temCallDetailRecord.setTcdrMsIsdnTo(temCallDetailRecordDTO.getTcdrMsIsdnTo());
+//				temCallDetailRecord.setTcdrMsIsdnTo(temCallDetailRecordDTO.getTcdrMsIsdnTo());
 				temCallDetailRecord.setTcdrUsedCount(temCallDetailRecordDTO.getTcdrUsedCount());
 				
 				TemCallDetailRecordPk temCallDetailRecordPk = new TemCallDetailRecordPk();
-				temCallDetailRecordPk.setTcdrMsIsdnFrom(temCallDetailRecordDTO.getTcdrMsIsdnFrom());
+//				temCallDetailRecordPk.setTcdrMsIsdnFrom(temCallDetailRecordDTO.getTcdrMsIsdnFrom());
 				temCallDetailRecordPk.setTcdrUsedTime(temCallDetailRecordDTO.getTcdrUsedTime());
 				if(temCallDetailRecordDTO.getTemType() != null) {
 					temCallDetailRecordPk.setTtId(temCallDetailRecordDTO.getTemType().getTtId());
@@ -113,11 +113,11 @@ public class TemsResource extends BaseResource {
 					.equals(serviceName)) {
 				TemCallDetailRecord temCallDetailRecordDTO = (TemCallDetailRecord)baseDTO;
 				th.co.imake.tem.domain.TemCallDetailRecord temCallDetailRecord = new th.co.imake.tem.domain.TemCallDetailRecord();
-				temCallDetailRecord.setTcdrMsIsdnTo(temCallDetailRecordDTO.getTcdrMsIsdnTo());
+//				temCallDetailRecord.setTcdrMsIsdnTo(temCallDetailRecordDTO.getTcdrMsIsdnTo());
 				temCallDetailRecord.setTcdrUsedCount(temCallDetailRecordDTO.getTcdrUsedCount());
 				
 				TemCallDetailRecordPk temCallDetailRecordPk = new TemCallDetailRecordPk();
-				temCallDetailRecordPk.setTcdrMsIsdnFrom(temCallDetailRecordDTO.getTcdrMsIsdnFrom());
+//				temCallDetailRecordPk.setTcdrMsIsdnFrom(temCallDetailRecordDTO.getTcdrMsIsdnFrom());
 				temCallDetailRecordPk.setTcdrUsedTime(temCallDetailRecordDTO.getTcdrUsedTime());
 				if(temCallDetailRecordDTO.getTemType() != null) {
 					temCallDetailRecordPk.setTtId(temCallDetailRecordDTO.getTemType().getTtId());
@@ -134,8 +134,8 @@ public class TemsResource extends BaseResource {
 						TemCallDetailRecord dto = new TemCallDetailRecord();
 						th.co.imake.tem.domain.TemCallDetailRecord temCallDetailRecord2 = (th.co.imake.tem.domain.TemCallDetailRecord) l
 								.get(i);
-						dto.setTcdrMsIsdnFrom(temCallDetailRecord2.getTemCallDetailRecordPk().getTcdrMsIsdnFrom());
-						dto.setTcdrMsIsdnTo(temCallDetailRecord2.getTcdrMsIsdnTo());
+//						dto.setTcdrMsIsdnFrom(temCallDetailRecord2.getTemCallDetailRecordPk().getTcdrMsIsdnFrom());
+//						dto.setTcdrMsIsdnTo(temCallDetailRecord2.getTcdrMsIsdnTo());
 						dto.setTcdrUsedCount(temCallDetailRecord2.getTcdrUsedCount());
 						dto.setTcdrUsedTime(temCallDetailRecord2.getTemCallDetailRecordPk().getTcdrUsedTime());
 						TemType temType = new TemType();
@@ -150,11 +150,11 @@ public class TemsResource extends BaseResource {
 					.equals(serviceName)) {
 				TemCallDetailRecord temCallDetailRecordDTO = (TemCallDetailRecord)baseDTO;
 				th.co.imake.tem.domain.TemCallDetailRecord temCallDetailRecord = new th.co.imake.tem.domain.TemCallDetailRecord();
-				temCallDetailRecord.setTcdrMsIsdnTo(temCallDetailRecordDTO.getTcdrMsIsdnTo());
+//				temCallDetailRecord.setTcdrMsIsdnTo(temCallDetailRecordDTO.getTcdrMsIsdnTo());
 				temCallDetailRecord.setTcdrUsedCount(temCallDetailRecordDTO.getTcdrUsedCount());
 				
 				TemCallDetailRecordPk temCallDetailRecordPk = new TemCallDetailRecordPk();
-				temCallDetailRecordPk.setTcdrMsIsdnFrom(temCallDetailRecordDTO.getTcdrMsIsdnFrom());
+//				temCallDetailRecordPk.setTcdrMsIsdnFrom(temCallDetailRecordDTO.getTcdrMsIsdnFrom());
 				temCallDetailRecordPk.setTcdrUsedTime(temCallDetailRecordDTO.getTcdrUsedTime());
 				if(temCallDetailRecordDTO.getTemType() != null) {
 					temCallDetailRecordPk.setTtId(temCallDetailRecordDTO.getTemType().getTtId());
@@ -689,7 +689,7 @@ public class TemsResource extends BaseResource {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		}
+		}*/
 		return null;
 	}
 }
