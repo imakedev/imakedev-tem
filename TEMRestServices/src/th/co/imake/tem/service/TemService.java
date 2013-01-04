@@ -31,6 +31,61 @@ public interface TemService {
 	public void deleteTemMsIsdn(Session session, TemMsIsdn temMsIsdn);
 	public List searchTemMsIsdn(Session session, TemMsIsdn temMsIsdn, Paging paging);
 	
+	public void insertTemProvider(Session session, TemProvider temProvider);
+	public void updateTemProvider(Session session, TemProvider temProvider);
+	public void deleteTemProvider(Session session, TemProvider temProvider);
+	public List searchTemProvider(Session session, TemProvider temProvider, Paging paging);
+	
+	public void insertTemType(Session session, TemType temType);
+	public void updateTemType(Session session, TemType temType);
+	public void deleteTemType(Session session, TemType temType);
+	public List searchTemType(Session session, TemType temType, Paging paging);
+	
+	public void insertTemMsIsdnPackageDetail(Session session, TemMsIsdnPackageDetail temMsIsdnPackageDetail);
+	public void updateTemMsIsdnPackageDetail(Session session, TemMsIsdnPackageDetail temMsIsdnPackageDetail);
+	public void deleteTemMsIsdnPackageDetail(Session session, TemMsIsdnPackageDetail temMsIsdnPackageDetail);
+	public List searchTemMsIsdnPackageDetail(Session session, TemMsIsdnPackageDetail temMsIsdnPackageDetail, Paging paging);
+	
+	public void insertTemPackageDetail(Session session, TemPackageDetail temPackageDetail);
+	public void updateTemPackageDetail(Session session, TemPackageDetail temPackageDetail);
+	public void deleteTemPackageDetail(Session session, TemPackageDetail temPackageDetail);
+	public List searchTemPackageDetail(Session session, TemPackageDetail temPackageDetail, Paging paging);
+	
+	public void insertTemPackageType(Session session, TemPackageType temPackageType);
+	public void updateTemPackageType(Session session, TemPackageType temPackageType);
+	public void deleteTemPackageType(Session session, TemPackageType temPackageType);
+	public List searchTemPackageType(Session session, TemPackageType temPackageType, Paging paging);
+	
+	public void insertTemSpecialList(Session session, TemSpecialList temSpecialList);
+	public void updateTemSpecialList(Session session, TemSpecialList temSpecialList);
+	public void deleteTemSpecialList(Session session, TemSpecialList temSpecialList);
+	public List searchTemSpecialList(Session session, TemSpecialList temSpecialList, Paging paging);
+	
+	public void insertTemCallDetailRecord(TemCallDetailRecord temCallDetailRecord);
+	public void updateTemCallDetailRecord(TemCallDetailRecord temCallDetailRecord);
+	public void deleteTemCallDetailRecord(TemCallDetailRecord temCallDetailRecord);
+	public List searchTemCallDetailRecord(TemCallDetailRecord temCallDetailRecord, Paging paging);
+	
+	public void insertTemCompany(TemCompany temCompany);
+	public void updateTemCompany(TemCompany temCompany);
+	public void deleteTemCompany(TemCompany temCompany);
+	public List searchTemCompany(TemCompany temCompany, Paging paging);
+	
+	public void insertTemMsIsdn(TemMsIsdn temMsIsdn);
+	public void updateTemMsIsdn(TemMsIsdn temMsIsdn);
+	public void deleteTemMsIsdn(TemMsIsdn temMsIsdn);
+	public List searchTemMsIsdn(TemMsIsdn temMsIsdn, Paging paging);
+	
+	public void insertTemProvider(TemProvider temProvider);
+	public void updateTemProvider(TemProvider temProvider);
+	public void deleteTemProvider(TemProvider temProvider);
+	public List searchTemProvider(TemProvider temProvider, Paging paging);
+	
+	public void insertTemType(TemType temType);
+	public void updateTemType(TemType temType);
+	public void deleteTemType(TemType temType);
+	public List searchTemType(TemType temType, Paging paging);
+	
 	public void insertTemMsIsdnPackageDetail(TemMsIsdnPackageDetail temMsIsdnPackageDetail);
 	public void updateTemMsIsdnPackageDetail(TemMsIsdnPackageDetail temMsIsdnPackageDetail);
 	public void deleteTemMsIsdnPackageDetail(TemMsIsdnPackageDetail temMsIsdnPackageDetail);
@@ -46,20 +101,9 @@ public interface TemService {
 	public void deleteTemPackageType(TemPackageType temPackageType);
 	public List searchTemPackageType(TemPackageType temPackageType, Paging paging);
 	
-	public void insertTemProvider(Session session, TemProvider temProvider);
-	public void updateTemProvider(Session session, TemProvider temProvider);
-	public void deleteTemProvider(Session session, TemProvider temProvider);
-	public List searchTemProvider(Session session, TemProvider temProvider, Paging paging);
-	
 	public void insertTemSpecialList(TemSpecialList temSpecialList);
 	public void updateTemSpecialList(TemSpecialList temSpecialList);
 	public void deleteTemSpecialList(TemSpecialList temSpecialList);
 	public List searchTemSpecialList(TemSpecialList temSpecialList, Paging paging);
 	
-	public void insertTemType(Session session, TemType temType);
-	public void updateTemType(Session session, TemType temType);
-	public void deleteTemType(Session session, TemType temType);
-	public List searchTemType(Session session, TemType temType, Paging paging);
-	
-	public void migrateData();
 }
