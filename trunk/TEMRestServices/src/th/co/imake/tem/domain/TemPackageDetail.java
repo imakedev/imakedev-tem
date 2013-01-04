@@ -1,6 +1,7 @@
 package th.co.imake.tem.domain;
 
 import java.io.Serializable;
+import java.sql.Time;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,6 +27,10 @@ public class TemPackageDetail implements Serializable {
 	private String tpdSmsPrice;
 	@Column(name = "TPD_DATA_PRICE")
 	private String tpdDataPrice;
+	@Column(name = "TPD_START_PERIOD")
+	private Time tpdStartPeriod;
+	@Column(name = "TPD_END_PERIOD")
+	private Time tpdEndPeriod;
 	@ManyToOne
 	@JoinColumn(name = "TPT_ID")
 	private TemPackageType temPackageType;
@@ -76,6 +81,22 @@ public class TemPackageDetail implements Serializable {
 
 	public void setTemPackageType(TemPackageType temPackageType) {
 		this.temPackageType = temPackageType;
+	}
+
+	public Time getTpdStartPeriod() {
+		return tpdStartPeriod;
+	}
+
+	public void setTpdStartPeriod(Time tpdStartPeriod) {
+		this.tpdStartPeriod = tpdStartPeriod;
+	}
+
+	public Time getTpdEndPeriod() {
+		return tpdEndPeriod;
+	}
+
+	public void setTpdEndPeriod(Time tpdEndPeriod) {
+		this.tpdEndPeriod = tpdEndPeriod;
 	}
 
 }

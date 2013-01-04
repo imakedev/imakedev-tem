@@ -47,24 +47,37 @@ public class TemServiceImpl implements TemService {
 		this.sessionAnnotationFactory = sessionAnnotationFactory;
 	}
 
-	public void insertTemType(Session session, TemType temType) {
-			session.beginTransaction();
-			Transaction transaction = session.getTransaction();
-			session.save(temType);
-			transaction.commit();
+	public void insertTemType(TemType temType) {
+		Session session = sessionAnnotationFactory.openSession();
+		session.beginTransaction();
+		Transaction transaction = session.getTransaction();
+		session.save(temType);
+		transaction.commit();
+		session.close();
 	}
 
-	public void updateTemType(Session session, TemType temType) {
-			session.update(temType);
+	public void updateTemType(TemType temType) {
+		Session session = sessionAnnotationFactory.openSession();
+		session.beginTransaction();
+		Transaction transaction = session.getTransaction();
+		session.update(temType);
+		transaction.commit();
+		session.close();
 	}
 
-	public void deleteTemType(Session session, TemType temType) {
-			session.delete(temType);
+	public void deleteTemType(TemType temType) {
+		Session session = sessionAnnotationFactory.openSession();
+		session.beginTransaction();
+		Transaction transaction = session.getTransaction();
+		session.delete(temType);
+		transaction.commit();
+		session.close();
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public List searchTemType(Session session, TemType temType, Paging paging) {
+	public List searchTemType(TemType temType, Paging paging) {
 		List transList = new ArrayList();
+		Session session = sessionAnnotationFactory.openSession();
 		try {
 			StringBuffer queryStr = new StringBuffer("from TemType temType ");
 			StringBuffer queryCount = new StringBuffer(
@@ -113,6 +126,7 @@ public class TemServiceImpl implements TemService {
 			int count = Integer.parseInt(queryC.uniqueResult().toString());
 			transList.add(list);
 			transList.add(count + "");
+			session.close();
 			return transList;
 		} catch (Exception re) {
 			re.printStackTrace();
@@ -120,24 +134,37 @@ public class TemServiceImpl implements TemService {
 		return null;
 	}
 
-	public void insertTemCompany(Session session, TemCompany temCompany) {
-			session.beginTransaction();
-			Transaction transaction = session.getTransaction();
-			session.save(temCompany);
-			transaction.commit();
+	public void insertTemCompany(TemCompany temCompany) {
+		Session session = sessionAnnotationFactory.openSession();
+		session.beginTransaction();
+		Transaction transaction = session.getTransaction();
+		session.save(temCompany);
+		transaction.commit();
+		session.close();
 	}
 
-	public void updateTemCompany(Session session, TemCompany temCompany) {
-			session.update(temCompany);
+	public void updateTemCompany(TemCompany temCompany) {
+		Session session = sessionAnnotationFactory.openSession();
+		session.beginTransaction();
+		Transaction transaction = session.getTransaction();
+		session.update(temCompany);
+		transaction.commit();
+		session.close();
 	}
 
-	public void deleteTemCompany(Session session, TemCompany temCompany) {
-			session.delete(temCompany);
+	public void deleteTemCompany(TemCompany temCompany) {
+		Session session = sessionAnnotationFactory.openSession();
+		session.beginTransaction();
+		Transaction transaction = session.getTransaction();
+		session.delete(temCompany);
+		transaction.commit();
+		session.close();
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public List searchTemCompany(Session session, TemCompany temCompany, Paging paging) {
+	public List searchTemCompany(TemCompany temCompany, Paging paging) {
 		List transList = new ArrayList();
+		Session session = sessionAnnotationFactory.openSession();
 		try {
 			session = sessionAnnotationFactory.openSession();
 			StringBuffer queryStr = new StringBuffer(
@@ -188,6 +215,7 @@ public class TemServiceImpl implements TemService {
 			int count = Integer.parseInt(queryC.uniqueResult().toString());
 			transList.add(list);
 			transList.add(count + "");
+			session.close();
 			return transList;
 		} catch (Exception re) {
 			re.printStackTrace();
@@ -195,24 +223,37 @@ public class TemServiceImpl implements TemService {
 		return null;
 	}
 
-	public void insertTemMsIsdn(Session session, TemMsIsdn temMsIsdn) {
-			session.beginTransaction();
-			Transaction transaction = session.getTransaction();
-			session.save(temMsIsdn);
-			transaction.commit();
+	public void insertTemMsIsdn(TemMsIsdn temMsIsdn) {
+		Session session = sessionAnnotationFactory.openSession();
+		session.beginTransaction();
+		Transaction transaction = session.getTransaction();
+		session.save(temMsIsdn);
+		transaction.commit();
+		session.close();
 	}
 
-	public void updateTemMsIsdn(Session session, TemMsIsdn temMsIsdn) {
-			session.update(temMsIsdn);
+	public void updateTemMsIsdn(TemMsIsdn temMsIsdn) {
+		Session session = sessionAnnotationFactory.openSession();
+		session.beginTransaction();
+		Transaction transaction = session.getTransaction();
+		session.update(temMsIsdn);
+		transaction.commit();
+		session.close();
 	}
 
-	public void deleteTemMsIsdn(Session session, TemMsIsdn temMsIsdn) {
-			session.delete(temMsIsdn);
+	public void deleteTemMsIsdn(TemMsIsdn temMsIsdn) {
+		Session session = sessionAnnotationFactory.openSession();
+		session.beginTransaction();
+		Transaction transaction = session.getTransaction();
+		session.delete(temMsIsdn);
+		transaction.commit();
+		session.close();
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public List searchTemMsIsdn(Session session, TemMsIsdn temMsIsdn, Paging paging) {
+	public List searchTemMsIsdn(TemMsIsdn temMsIsdn, Paging paging) {
 		List transList = new ArrayList();
+		Session session = sessionAnnotationFactory.openSession();
 		try {
 			session = sessionAnnotationFactory.openSession();
 			StringBuffer queryStr = new StringBuffer(
@@ -263,6 +304,7 @@ public class TemServiceImpl implements TemService {
 			int count = Integer.parseInt(queryC.uniqueResult().toString());
 			transList.add(list);
 			transList.add(count + "");
+			session.close();
 			return transList;
 		} catch (Exception re) {
 			re.printStackTrace();
@@ -273,10 +315,13 @@ public class TemServiceImpl implements TemService {
 	public void insertTemPackageType(TemPackageType temPackageType) {
 		Session session = sessionAnnotationFactory.openSession();
 		try {
+			session.beginTransaction();
+			Transaction transaction = session.getTransaction();
 			session.save(temPackageType);
+			transaction.commit();
 		} finally {
 			if (session != null) {
-				session = null;
+				session.close();
 			}
 		}
 	}
@@ -284,12 +329,15 @@ public class TemServiceImpl implements TemService {
 	public void updateTemPackageType(TemPackageType temPackageType) {
 		Session session = sessionAnnotationFactory.openSession();
 		try {
+			session.beginTransaction();
+			Transaction transaction = session.getTransaction();
 			session.update(temPackageType);
+			transaction.commit();
 		} catch (Exception e) {
 			// TODO: handle exception
 		} finally {
 			if (session != null) {
-				session = null;
+				session.close();
 			}
 		}
 	}
@@ -297,10 +345,13 @@ public class TemServiceImpl implements TemService {
 	public void deleteTemPackageType(TemPackageType temPackageType) {
 		Session session = sessionAnnotationFactory.openSession();
 		try {
+			session.beginTransaction();
+			Transaction transaction = session.getTransaction();
 			session.delete(temPackageType);
+			transaction.commit();
 		} finally {
 			if (session != null) {
-				session = null;
+				session.close();
 			}
 		}
 	}
@@ -369,6 +420,7 @@ public class TemServiceImpl implements TemService {
 			int count = Integer.parseInt(queryC.uniqueResult().toString());
 			transList.add(list);
 			transList.add(count + "");
+			session.close();
 			return transList;
 		} catch (Exception re) {
 			re.printStackTrace();
@@ -376,24 +428,37 @@ public class TemServiceImpl implements TemService {
 		return null;
 	}
 
-	public void insertTemProvider(Session session, TemProvider temProvider) {
-			session.beginTransaction();
-			Transaction transaction = session.getTransaction();
-			session.save(temProvider);
-			transaction.commit();
+	public void insertTemProvider(TemProvider temProvider) {
+		Session session = sessionAnnotationFactory.openSession();
+		session.beginTransaction();
+		Transaction transaction = session.getTransaction();
+		session.save(temProvider);
+		transaction.commit();
+		session.close();
 	}
 
-	public void updateTemProvider(Session session, TemProvider temProvider) {
-			session.update(temProvider);
+	public void updateTemProvider(TemProvider temProvider) {
+		Session session = sessionAnnotationFactory.openSession();
+		session.beginTransaction();
+		Transaction transaction = session.getTransaction();
+		session.update(temProvider);
+		transaction.commit();
+		session.close();
 	}
 
-	public void deleteTemProvider(Session session, TemProvider temProvider) {
-			session.delete(temProvider);
+	public void deleteTemProvider(TemProvider temProvider) {
+		Session session = sessionAnnotationFactory.openSession();
+		session.beginTransaction();
+		Transaction transaction = session.getTransaction();
+		session.delete(temProvider);
+		transaction.commit();
+		session.close();
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public List searchTemProvider(Session session, TemProvider temProvider, Paging paging) {
+	public List searchTemProvider(TemProvider temProvider, Paging paging) {
 		List transList = new ArrayList();
+		Session session = sessionAnnotationFactory.openSession();
 		try {
 			StringBuffer queryStr = new StringBuffer(
 					"from TemProvider temProvider ");
@@ -443,6 +508,7 @@ public class TemServiceImpl implements TemService {
 			int count = Integer.parseInt(queryC.uniqueResult().toString());
 			transList.add(list);
 			transList.add(count + "");
+			session.close();
 			return transList;
 		} catch (Exception re) {
 			re.printStackTrace();
@@ -453,10 +519,13 @@ public class TemServiceImpl implements TemService {
 	public void insertTemSpecialList(TemSpecialList temSpecialList) {
 		Session session = sessionAnnotationFactory.openSession();
 		try {
+			session.beginTransaction();
+			Transaction transaction = session.getTransaction();
 			session.save(temSpecialList);
+			transaction.commit();
 		} finally {
 			if (session != null) {
-				session = null;
+				session.close();
 			}
 		}
 	}
@@ -464,12 +533,15 @@ public class TemServiceImpl implements TemService {
 	public void updateTemSpecialList(TemSpecialList temSpecialList) {
 		Session session = sessionAnnotationFactory.openSession();
 		try {
+			session.beginTransaction();
+			Transaction transaction = session.getTransaction();
 			session.update(temSpecialList);
+			transaction.commit();
 		} catch (Exception e) {
 			// TODO: handle exception
 		} finally {
 			if (session != null) {
-				session = null;
+				session.close();
 			}
 		}
 	}
@@ -477,10 +549,13 @@ public class TemServiceImpl implements TemService {
 	public void deleteTemSpecialList(TemSpecialList temSpecialList) {
 		Session session = sessionAnnotationFactory.openSession();
 		try {
+			session.beginTransaction();
+			Transaction transaction = session.getTransaction();
 			session.delete(temSpecialList);
+			transaction.commit();
 		} finally {
 			if (session != null) {
-				session = null;
+				session.close();
 			}
 		}
 	}
@@ -499,11 +574,15 @@ public class TemServiceImpl implements TemService {
 			boolean haveCondition = false;
 			int paramindex = 0;
 
-			TemSpecialListPk temSpecialListPk = temSpecialList.getTemSpecialListPk();
-			String tslMsisdn = temSpecialListPk!=null?temSpecialListPk.getTslMsisdn():null;
-			String tslMsisdnFriend = temSpecialListPk!=null?temSpecialListPk.getTslMsisdnFriend():null;
+			TemSpecialListPk temSpecialListPk = temSpecialList
+					.getTemSpecialListPk();
+			String tslMsisdn = temSpecialListPk != null ? temSpecialListPk
+					.getTslMsisdn() : null;
+			String tslMsisdnFriend = temSpecialListPk != null ? temSpecialListPk
+					.getTslMsisdnFriend() : null;
 
-			if (temSpecialListPk != null && tslMsisdn != null && tslMsisdn.trim().length() > 0) {
+			if (temSpecialListPk != null && tslMsisdn != null
+					&& tslMsisdn.trim().length() > 0) {
 				queryStr.append((haveCondition ? " and " : " where ")
 						+ " temSpecialList.tslMsisdn=? ");
 				queryCount.append((haveCondition ? " and " : " where ")
@@ -511,7 +590,8 @@ public class TemServiceImpl implements TemService {
 				map.put("" + paramindex++, tslMsisdn);
 				haveCondition = true;
 			}
-			if (temSpecialListPk != null && tslMsisdnFriend != null && tslMsisdnFriend.trim().length() > 0) {
+			if (temSpecialListPk != null && tslMsisdnFriend != null
+					&& tslMsisdnFriend.trim().length() > 0) {
 				queryStr.append((haveCondition ? " and " : " where ")
 						+ " temSpecialList.tslMsisdnFriend=? ");
 				queryCount.append((haveCondition ? " and " : " where ")
@@ -521,8 +601,8 @@ public class TemServiceImpl implements TemService {
 			}
 			if (paging.getOrderBy() != null
 					&& paging.getOrderBy().trim().length() > 0) {
-				queryStr.append(" Order By temSpecialList." + paging.getOrderBy()
-						+ " asc");
+				queryStr.append(" Order By temSpecialList."
+						+ paging.getOrderBy() + " asc");
 			}
 			Query query = session.createQuery(queryStr.toString());
 			Query queryC = session.createQuery(queryCount.toString());
@@ -540,6 +620,7 @@ public class TemServiceImpl implements TemService {
 			int count = Integer.parseInt(queryC.uniqueResult().toString());
 			transList.add(list);
 			transList.add(count + "");
+			session.close();
 			return transList;
 		} catch (Exception re) {
 			re.printStackTrace();
@@ -550,10 +631,13 @@ public class TemServiceImpl implements TemService {
 	public void insertTemPackageDetail(TemPackageDetail temPackageDetail) {
 		Session session = sessionAnnotationFactory.openSession();
 		try {
+			session.beginTransaction();
+			Transaction transaction = session.getTransaction();
 			session.save(temPackageDetail);
+			transaction.commit();
 		} finally {
 			if (session != null) {
-				session = null;
+				session.close();
 			}
 		}
 	}
@@ -561,12 +645,15 @@ public class TemServiceImpl implements TemService {
 	public void updateTemPackageDetail(TemPackageDetail temPackageDetail) {
 		Session session = sessionAnnotationFactory.openSession();
 		try {
+			session.beginTransaction();
+			Transaction transaction = session.getTransaction();
 			session.update(temPackageDetail);
+			transaction.commit();
 		} catch (Exception e) {
 			// TODO: handle exception
 		} finally {
 			if (session != null) {
-				session = null;
+				session.close();
 			}
 		}
 	}
@@ -574,10 +661,13 @@ public class TemServiceImpl implements TemService {
 	public void deleteTemPackageDetail(TemPackageDetail temPackageDetail) {
 		Session session = sessionAnnotationFactory.openSession();
 		try {
+			session.beginTransaction();
+			Transaction transaction = session.getTransaction();
 			session.delete(temPackageDetail);
+			transaction.commit();
 		} finally {
 			if (session != null) {
-				session = null;
+				session.close();
 			}
 		}
 	}
@@ -598,7 +688,8 @@ public class TemServiceImpl implements TemService {
 
 			Integer tpdId = temPackageDetail.getTpdId();
 			String tpdName = temPackageDetail.getTpdName();
-//			TemPackageType temPackageType = temPackageDetail.getTemPackageType();
+			// TemPackageType temPackageType =
+			// temPackageDetail.getTemPackageType();
 
 			if (tpdId != null) {
 				queryStr.append((haveCondition ? " and " : " where ")
@@ -616,18 +707,19 @@ public class TemServiceImpl implements TemService {
 				map.put("" + paramindex++, tpdName);
 				haveCondition = true;
 			}
-//			if (temPackageType != null && temPackageType.getTptId() != null) {
-//				queryStr.append((haveCondition ? " and " : " where ")
-//						+ " temPackageDetail.temPackageType.tptId=? ");
-//				queryCount.append((haveCondition ? " and " : " where ")
-//						+ " temPackageDetail.temPackageType.tptId=? ");
-//				map.put("" + paramindex++, temPackageType.getTptId());
-//				haveCondition = true;
-//			}
+			// if (temPackageType != null && temPackageType.getTptId() != null)
+			// {
+			// queryStr.append((haveCondition ? " and " : " where ")
+			// + " temPackageDetail.temPackageType.tptId=? ");
+			// queryCount.append((haveCondition ? " and " : " where ")
+			// + " temPackageDetail.temPackageType.tptId=? ");
+			// map.put("" + paramindex++, temPackageType.getTptId());
+			// haveCondition = true;
+			// }
 			if (paging.getOrderBy() != null
 					&& paging.getOrderBy().trim().length() > 0) {
-				queryStr.append(" Order By temPackageDetail." + paging.getOrderBy()
-						+ " asc");
+				queryStr.append(" Order By temPackageDetail."
+						+ paging.getOrderBy() + " asc");
 			}
 			Query query = session.createQuery(queryStr.toString());
 			Query queryC = session.createQuery(queryCount.toString());
@@ -645,6 +737,7 @@ public class TemServiceImpl implements TemService {
 			int count = Integer.parseInt(queryC.uniqueResult().toString());
 			transList.add(list);
 			transList.add(count + "");
+			session.close();
 			return transList;
 		} catch (Exception re) {
 			re.printStackTrace();
@@ -652,27 +745,40 @@ public class TemServiceImpl implements TemService {
 		return null;
 	}
 
-	public void insertTemCallDetailRecord(Session session, 
+	public void insertTemCallDetailRecord(
 			TemCallDetailRecord temCallDetailRecord) {
-			session.beginTransaction();
-			Transaction transaction = session.getTransaction();
-			session.save(temCallDetailRecord);
-			transaction.commit();
+		Session session = sessionAnnotationFactory.openSession();
+		session.beginTransaction();
+		Transaction transaction = session.getTransaction();
+		session.save(temCallDetailRecord);
+		transaction.commit();
+		session.close();
 	}
 
-	public void updateTemCallDetailRecord(Session session, 
+	public void updateTemCallDetailRecord(
 			TemCallDetailRecord temCallDetailRecord) {
-			session.update(temCallDetailRecord);
+		Session session = sessionAnnotationFactory.openSession();
+		session.beginTransaction();
+		Transaction transaction = session.getTransaction();
+		session.update(temCallDetailRecord);
+		transaction.commit();
+		session.close();
 	}
 
-	public void deleteTemCallDetailRecord(Session session, 
+	public void deleteTemCallDetailRecord(
 			TemCallDetailRecord temCallDetailRecord) {
-			session.delete(temCallDetailRecord);
+		Session session = sessionAnnotationFactory.openSession();
+		session.beginTransaction();
+		Transaction transaction = session.getTransaction();
+		session.delete(temCallDetailRecord);
+		transaction.commit();
+		session.close();
 	}
 
-	public List searchTemCallDetailRecord(Session session, 
+	public List searchTemCallDetailRecord(
 			TemCallDetailRecord temCallDetailRecord, Paging paging) {
 		List transList = new ArrayList();
+		Session session = sessionAnnotationFactory.openSession();
 		try {
 			StringBuffer queryStr = new StringBuffer(
 					"from TemCallDetailRecord temCallDetailRecord ");
@@ -683,9 +789,11 @@ public class TemServiceImpl implements TemService {
 			int paramindex = 0;
 
 			String tcdrMsIsdnTo = temCallDetailRecord.getTcdrMsIsdnTo();
-//			String tcdrMsIsdnTo = temCallDetailRecord.getTcdrMsIsdnTo() != null?temCallDetailRecord.getTcdrMsIsdnTo().getMsIsdn():null;
-//			TemType temType = temCallDetailRecord.getTemType();
-			TemCallDetailRecordPk temCallDetailRecordPk = temCallDetailRecord.getTemCallDetailRecordPk();
+			// String tcdrMsIsdnTo = temCallDetailRecord.getTcdrMsIsdnTo() !=
+			// null?temCallDetailRecord.getTcdrMsIsdnTo().getMsIsdn():null;
+			// TemType temType = temCallDetailRecord.getTemType();
+			TemCallDetailRecordPk temCallDetailRecordPk = temCallDetailRecord
+					.getTemCallDetailRecordPk();
 
 			if (tcdrMsIsdnTo != null && tcdrMsIsdnTo.trim().length() > 0) {
 				queryStr.append((haveCondition ? " and " : " where ")
@@ -695,26 +803,31 @@ public class TemServiceImpl implements TemService {
 				map.put("" + paramindex++, tcdrMsIsdnTo);
 				haveCondition = true;
 			}
-//			if (temType != null && temType.getTtId() != null) {
-//				queryStr.append((haveCondition ? " and " : " where ")
-//						+ " temCallDetailRecord.temType.ttId=? ");
-//				queryCount.append((haveCondition ? " and " : " where ")
-//						+ " temCallDetailRecord.temType.ttId=? ");
-//				map.put("" + paramindex++, temType.getTtId());
-//				haveCondition = true;
-//			}
-			if (temCallDetailRecordPk != null && temCallDetailRecordPk.getTcdrMsIsdnFrom() != null && temCallDetailRecordPk.getTcdrMsIsdnFrom().trim().length() > 0) {
+			// if (temType != null && temType.getTtId() != null) {
+			// queryStr.append((haveCondition ? " and " : " where ")
+			// + " temCallDetailRecord.temType.ttId=? ");
+			// queryCount.append((haveCondition ? " and " : " where ")
+			// + " temCallDetailRecord.temType.ttId=? ");
+			// map.put("" + paramindex++, temType.getTtId());
+			// haveCondition = true;
+			// }
+			if (temCallDetailRecordPk != null
+					&& temCallDetailRecordPk.getTcdrMsIsdnFrom() != null
+					&& temCallDetailRecordPk.getTcdrMsIsdnFrom().trim()
+							.length() > 0) {
 				queryStr.append((haveCondition ? " and " : " where ")
 						+ " temCallDetailRecord.temCallDetailRecordPk.tcdrMsIsdnFrom=? ");
-				queryCount.append((haveCondition ? " and " : " where ")
-						+ " temCallDetailRecord.temCallDetailRecordPk.tcdrMsIsdnFrom=? ");
-				map.put("" + paramindex++, temCallDetailRecordPk.getTcdrMsIsdnFrom());
+				queryCount
+						.append((haveCondition ? " and " : " where ")
+								+ " temCallDetailRecord.temCallDetailRecordPk.tcdrMsIsdnFrom=? ");
+				map.put("" + paramindex++,
+						temCallDetailRecordPk.getTcdrMsIsdnFrom());
 				haveCondition = true;
 			}
 			if (paging.getOrderBy() != null
 					&& paging.getOrderBy().trim().length() > 0) {
-				queryStr.append(" Order By temCallDetailRecord." + paging.getOrderBy()
-						+ " asc");
+				queryStr.append(" Order By temCallDetailRecord."
+						+ paging.getOrderBy() + " asc");
 			}
 			Query query = session.createQuery(queryStr.toString());
 			Query queryC = session.createQuery(queryCount.toString());
@@ -732,6 +845,7 @@ public class TemServiceImpl implements TemService {
 			int count = Integer.parseInt(queryC.uniqueResult().toString());
 			transList.add(list);
 			transList.add(count + "");
+			session.close();
 			return transList;
 		} catch (Exception re) {
 			re.printStackTrace();
@@ -743,10 +857,13 @@ public class TemServiceImpl implements TemService {
 			TemMsIsdnPackageDetail temMsIsdnPackageDetail) {
 		Session session = sessionAnnotationFactory.openSession();
 		try {
+			session.beginTransaction();
+			Transaction transaction = session.getTransaction();
 			session.save(temMsIsdnPackageDetail);
+			transaction.commit();
 		} finally {
 			if (session != null) {
-				session = null;
+				session.close();
 			}
 		}
 	}
@@ -755,12 +872,15 @@ public class TemServiceImpl implements TemService {
 			TemMsIsdnPackageDetail temMsIsdnPackageDetail) {
 		Session session = sessionAnnotationFactory.openSession();
 		try {
+			session.beginTransaction();
+			Transaction transaction = session.getTransaction();
 			session.update(temMsIsdnPackageDetail);
+			transaction.commit();
 		} catch (Exception e) {
 			// TODO: handle exception
 		} finally {
 			if (session != null) {
-				session = null;
+				session.close();
 			}
 		}
 	}
@@ -769,10 +889,13 @@ public class TemServiceImpl implements TemService {
 			TemMsIsdnPackageDetail temMsIsdnPackageDetail) {
 		Session session = sessionAnnotationFactory.openSession();
 		try {
+			session.beginTransaction();
+			Transaction transaction = session.getTransaction();
 			session.delete(temMsIsdnPackageDetail);
+			transaction.commit();
 		} finally {
 			if (session != null) {
-				session = null;
+				session.close();
 			}
 		}
 	}
@@ -791,17 +914,22 @@ public class TemServiceImpl implements TemService {
 			boolean haveCondition = false;
 			int paramindex = 0;
 
-			TemMsIsdnPackageDetailPk temMsIsdnPackageDetailPk = temMsIsdnPackageDetail.getTemMsIsdnPackageDetailPk();
+			TemMsIsdnPackageDetailPk temMsIsdnPackageDetailPk = temMsIsdnPackageDetail
+					.getTemMsIsdnPackageDetailPk();
 
-			if (temMsIsdnPackageDetailPk != null && temMsIsdnPackageDetailPk.getMsIsdn() != null && temMsIsdnPackageDetailPk.getMsIsdn().trim().length() > 0) {
+			if (temMsIsdnPackageDetailPk != null
+					&& temMsIsdnPackageDetailPk.getMsIsdn() != null
+					&& temMsIsdnPackageDetailPk.getMsIsdn().trim().length() > 0) {
 				queryStr.append((haveCondition ? " and " : " where ")
 						+ " temMsIsdnPackageDetail.temMsIsdnPackageDetailPk.msIsdn=? ");
-				queryCount.append((haveCondition ? " and " : " where ")
-						+ " temMsIsdnPackageDetail.temMsIsdnPackageDetailPk.msIsdn=? ");
+				queryCount
+						.append((haveCondition ? " and " : " where ")
+								+ " temMsIsdnPackageDetail.temMsIsdnPackageDetailPk.msIsdn=? ");
 				map.put("" + paramindex++, temMsIsdnPackageDetailPk.getMsIsdn());
 				haveCondition = true;
 			}
-			if (temMsIsdnPackageDetailPk != null && temMsIsdnPackageDetailPk.getTpdId() != null) {
+			if (temMsIsdnPackageDetailPk != null
+					&& temMsIsdnPackageDetailPk.getTpdId() != null) {
 				queryStr.append((haveCondition ? " and " : " where ")
 						+ " temMsIsdnPackageDetail.temPackageDetail.tpdId=? ");
 				queryCount.append((haveCondition ? " and " : " where ")
@@ -811,8 +939,8 @@ public class TemServiceImpl implements TemService {
 			}
 			if (paging.getOrderBy() != null
 					&& paging.getOrderBy().trim().length() > 0) {
-				queryStr.append(" Order By temMsIsdnPackageDetail." + paging.getOrderBy()
-						+ " asc");
+				queryStr.append(" Order By temMsIsdnPackageDetail."
+						+ paging.getOrderBy() + " asc");
 			}
 			Query query = session.createQuery(queryStr.toString());
 			Query queryC = session.createQuery(queryCount.toString());
@@ -830,15 +958,17 @@ public class TemServiceImpl implements TemService {
 			int count = Integer.parseInt(queryC.uniqueResult().toString());
 			transList.add(list);
 			transList.add(count + "");
+			session.close();
 			return transList;
 		} catch (Exception re) {
 			re.printStackTrace();
 		}
 		return null;
 	}
-	
+
 	public void migrateData() {
-		List list = new MigrateData().readExcel(Util.getProperty("MIGRATE_DATA_FILE"));
+		List list = new MigrateData().readExcel(Util
+				.getProperty("MIGRATE_DATA_FILE"));
 		Paging paging = new Paging();
 		TemType temType = new TemType();
 		Session session = sessionAnnotationFactory.openSession();
@@ -847,31 +977,40 @@ public class TemServiceImpl implements TemService {
 		List listProvider = searchTemProvider(session, temProvider, paging);
 		TemCompany temCompany = new TemCompany();
 		List listCompany = searchTemCompany(session, temCompany, paging);
-//		System.out.println(list.size());
-		for(int i=0;i<list.size();i++) {
-			CDRTemplate cdrTemplate = (CDRTemplate)list.get(i);
-//			System.out.println(cdrTemplate.getMsIsdnFrom()+"\t"+cdrTemplate.getMsIsdnTo());
-			if(cdrTemplate.getMsIsdnFrom() != null && cdrTemplate.getMsIsdnFrom().trim().length() > 0) {
+		// System.out.println(list.size());
+		for (int i = 0; i < list.size(); i++) {
+			CDRTemplate cdrTemplate = (CDRTemplate) list.get(i);
+			// System.out.println(cdrTemplate.getMsIsdnFrom()+"\t"+cdrTemplate.getMsIsdnTo());
+			if (cdrTemplate.getMsIsdnFrom() != null
+					&& cdrTemplate.getMsIsdnFrom().trim().length() > 0) {
 				TemMsIsdn temMsIsdn = new TemMsIsdn();
 				temMsIsdn.setMsIsdn(cdrTemplate.getMsIsdnFrom());
 				List list2 = searchTemMsIsdn(session, temMsIsdn, paging);
-//				System.out.println(list2+" : "+list2.size()+" : "+(Integer)list2.get(1));
-				if(list2 != null && list2.size() == 2 && (Integer.parseInt(list2.get(1).toString())) > 0) {
+				// System.out.println(list2+" : "+list2.size()+" : "+(Integer)list2.get(1));
+				if (list2 != null && list2.size() == 2
+						&& (Integer.parseInt(list2.get(1).toString())) > 0) {
 				} else {
-					int providerSize = Integer.parseInt(listProvider.get(1).toString());
-					List providers = (List)listProvider.get(0);
-					for(int j=0;j<providerSize;j++) {
-						TemProvider provider = (TemProvider)providers.get(j);
-						if(cdrTemplate.getMsIsdnFromProvider().equalsIgnoreCase(provider.getTpName())) {
+					int providerSize = Integer.parseInt(listProvider.get(1)
+							.toString());
+					List providers = (List) listProvider.get(0);
+					for (int j = 0; j < providerSize; j++) {
+						TemProvider provider = (TemProvider) providers.get(j);
+						if (cdrTemplate.getMsIsdnFromProvider()
+								.equalsIgnoreCase(provider.getTpName())) {
 							temMsIsdn.setTemProvider(provider);
 							break;
 						}
 					}
-					int companySize = Integer.parseInt(listCompany.get(1).toString());
-					List companys = (List)listCompany.get(0);
-					for(int j=0;j<companySize;j++) {
-						TemCompany company = (TemCompany)companys.get(j);
-						if(cdrTemplate.getMsIsdnFromCompany() != null && cdrTemplate.getMsIsdnFromCompany().trim().length() > 0 && cdrTemplate.getMsIsdnFromCompany().equalsIgnoreCase(company.getTcName())) {
+					int companySize = Integer.parseInt(listCompany.get(1)
+							.toString());
+					List companys = (List) listCompany.get(0);
+					for (int j = 0; j < companySize; j++) {
+						TemCompany company = (TemCompany) companys.get(j);
+						if (cdrTemplate.getMsIsdnFromCompany() != null
+								&& cdrTemplate.getMsIsdnFromCompany().trim()
+										.length() > 0
+								&& cdrTemplate.getMsIsdnFromCompany()
+										.equalsIgnoreCase(company.getTcName())) {
 							temMsIsdn.setTemCompany(company);
 							break;
 						}
@@ -879,20 +1018,24 @@ public class TemServiceImpl implements TemService {
 					insertTemMsIsdn(session, temMsIsdn);
 				}
 			}
-			
-			if(cdrTemplate.getMsIsdnTo() != null && cdrTemplate.getMsIsdnTo().trim().length() > 0) {
+
+			if (cdrTemplate.getMsIsdnTo() != null
+					&& cdrTemplate.getMsIsdnTo().trim().length() > 0) {
 				TemMsIsdn temMsIsdn = new TemMsIsdn();
 				temMsIsdn.setMsIsdn(cdrTemplate.getMsIsdnTo());
 				List list2 = searchTemMsIsdn(session, temMsIsdn, paging);
-				if(list2 != null && list2.size() == 2 && (Integer.parseInt(list2.get(1).toString())) > 0) {
-//					System.out.println("################## If #######################");
+				if (list2 != null && list2.size() == 2
+						&& (Integer.parseInt(list2.get(1).toString())) > 0) {
+					// System.out.println("################## If #######################");
 				} else {
-//					System.out.println("################## Else #######################"+cdrTemplate.getMsIsdnTo()+" : "+cdrTemplate.getMsIsdnToProvider());
-					int providerSize = Integer.parseInt(listProvider.get(1).toString());
-					List providers = (List)listProvider.get(0);
-					for(int j=0;j<providerSize;j++) {
-						TemProvider provider = (TemProvider)providers.get(j);
-						if(cdrTemplate.getMsIsdnToProvider().equalsIgnoreCase(provider.getTpName())) {
+					// System.out.println("################## Else #######################"+cdrTemplate.getMsIsdnTo()+" : "+cdrTemplate.getMsIsdnToProvider());
+					int providerSize = Integer.parseInt(listProvider.get(1)
+							.toString());
+					List providers = (List) listProvider.get(0);
+					for (int j = 0; j < providerSize; j++) {
+						TemProvider provider = (TemProvider) providers.get(j);
+						if (cdrTemplate.getMsIsdnToProvider().equalsIgnoreCase(
+								provider.getTpName())) {
 							temMsIsdn.setTemProvider(provider);
 							break;
 						}
@@ -900,20 +1043,23 @@ public class TemServiceImpl implements TemService {
 					insertTemMsIsdn(session, temMsIsdn);
 				}
 			}
-			
+
 			TemCallDetailRecord temCallDetailRecord = new TemCallDetailRecord();
-//			TemMsIsdn temMsIsdnTo = new TemMsIsdn();
-//			temMsIsdnTo.setMsIsdn(cdrTemplate.getMsIsdnTo());
+			// TemMsIsdn temMsIsdnTo = new TemMsIsdn();
+			// temMsIsdnTo.setMsIsdn(cdrTemplate.getMsIsdnTo());
 			temCallDetailRecord.setTcdrMsIsdnTo(cdrTemplate.getMsIsdnTo());
 			temCallDetailRecord.setTcdrUsedCount(cdrTemplate.getUsedCount());
 			TemCallDetailRecordPk temCallDetailRecordPk = new TemCallDetailRecordPk();
-			temCallDetailRecordPk.setTcdrMsIsdnFrom(cdrTemplate.getMsIsdnFrom());
-			temCallDetailRecordPk.setTcdrUsedTime(new Timestamp(cdrTemplate.getUsedDate().getTime()));
+			temCallDetailRecordPk
+					.setTcdrMsIsdnFrom(cdrTemplate.getMsIsdnFrom());
+			temCallDetailRecordPk.setTcdrUsedTime(new Timestamp(cdrTemplate
+					.getUsedDate().getTime()));
 			int typeSize = Integer.parseInt(listType.get(1).toString());
-			List types = (List)listType.get(0);
-			for(int j=0;j<typeSize;j++) {
-				TemType type = (TemType)types.get(j);
-				if(cdrTemplate.getUsedType().equalsIgnoreCase(type.getTtName())) {
+			List types = (List) listType.get(0);
+			for (int j = 0; j < typeSize; j++) {
+				TemType type = (TemType) types.get(j);
+				if (cdrTemplate.getUsedType()
+						.equalsIgnoreCase(type.getTtName())) {
 					temCallDetailRecordPk.setTtId(type.getTtId());
 					break;
 				}
@@ -922,6 +1068,209 @@ public class TemServiceImpl implements TemService {
 			insertTemCallDetailRecord(session, temCallDetailRecord);
 		}
 		session.close();
+	}
+
+	public void insertTemCallDetailRecord(Session session,
+			TemCallDetailRecord temCallDetailRecord) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void updateTemCallDetailRecord(Session session,
+			TemCallDetailRecord temCallDetailRecord) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void deleteTemCallDetailRecord(Session session,
+			TemCallDetailRecord temCallDetailRecord) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public List searchTemCallDetailRecord(Session session,
+			TemCallDetailRecord temCallDetailRecord, Paging paging) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void insertTemCompany(Session session, TemCompany temCompany) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void updateTemCompany(Session session, TemCompany temCompany) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void deleteTemCompany(Session session, TemCompany temCompany) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public List searchTemCompany(Session session, TemCompany temCompany,
+			Paging paging) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void insertTemMsIsdn(Session session, TemMsIsdn temMsIsdn) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void updateTemMsIsdn(Session session, TemMsIsdn temMsIsdn) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void deleteTemMsIsdn(Session session, TemMsIsdn temMsIsdn) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public List searchTemMsIsdn(Session session, TemMsIsdn temMsIsdn,
+			Paging paging) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void insertTemProvider(Session session, TemProvider temProvider) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void updateTemProvider(Session session, TemProvider temProvider) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void deleteTemProvider(Session session, TemProvider temProvider) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public List searchTemProvider(Session session, TemProvider temProvider,
+			Paging paging) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void insertTemType(Session session, TemType temType) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void updateTemType(Session session, TemType temType) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void deleteTemType(Session session, TemType temType) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public List searchTemType(Session session, TemType temType, Paging paging) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void insertTemMsIsdnPackageDetail(Session session,
+			TemMsIsdnPackageDetail temMsIsdnPackageDetail) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void updateTemMsIsdnPackageDetail(Session session,
+			TemMsIsdnPackageDetail temMsIsdnPackageDetail) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void deleteTemMsIsdnPackageDetail(Session session,
+			TemMsIsdnPackageDetail temMsIsdnPackageDetail) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public List searchTemMsIsdnPackageDetail(Session session,
+			TemMsIsdnPackageDetail temMsIsdnPackageDetail, Paging paging) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void insertTemPackageDetail(Session session,
+			TemPackageDetail temPackageDetail) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void updateTemPackageDetail(Session session,
+			TemPackageDetail temPackageDetail) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void deleteTemPackageDetail(Session session,
+			TemPackageDetail temPackageDetail) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public List searchTemPackageDetail(Session session,
+			TemPackageDetail temPackageDetail, Paging paging) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void insertTemPackageType(Session session,
+			TemPackageType temPackageType) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void updateTemPackageType(Session session,
+			TemPackageType temPackageType) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void deleteTemPackageType(Session session,
+			TemPackageType temPackageType) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public List searchTemPackageType(Session session,
+			TemPackageType temPackageType, Paging paging) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void insertTemSpecialList(Session session,
+			TemSpecialList temSpecialList) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void updateTemSpecialList(Session session,
+			TemSpecialList temSpecialList) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void deleteTemSpecialList(Session session,
+			TemSpecialList temSpecialList) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public List searchTemSpecialList(Session session,
+			TemSpecialList temSpecialList, Paging paging) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

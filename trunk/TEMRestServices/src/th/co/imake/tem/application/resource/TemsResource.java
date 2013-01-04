@@ -69,7 +69,7 @@ public class TemsResource extends BaseResource {
 		InputStream in = null;
 		ResultDTO resultDTO = null;
 		String max_rows = "0";
-		/*try {
+		try {
 			in = entity.getStream();
 			BaseDTO baseDTO = null;
 			Object baseObj = XStreamUtils.getXstream().fromXML(in);
@@ -689,7 +689,7 @@ public class TemsResource extends BaseResource {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		}*/
+		}
 		return null;
 	}
 }

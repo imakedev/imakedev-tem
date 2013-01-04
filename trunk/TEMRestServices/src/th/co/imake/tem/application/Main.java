@@ -58,8 +58,6 @@ public class Main {
 //		MigrateData migrateData = new MigrateData();
 //		migrateData.migrateData(temService);
 		
-		temService.migrateData();
-		
 	}
 	
 	/*public static void saveTemProvider(TemService temService) {
