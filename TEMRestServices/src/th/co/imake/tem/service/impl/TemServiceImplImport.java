@@ -177,7 +177,8 @@ public class TemServiceImplImport implements TemService {
 	public void insertTemMsIsdn(Session session, TemMsIsdn temMsIsdn) {
 		session.beginTransaction();
 		Transaction transaction = session.getTransaction();
-		session.save(temMsIsdn);
+		//session.save(temMsIsdn);
+		session.saveOrUpdate(temMsIsdn);
 		transaction.commit();
 	}
 
@@ -328,7 +329,8 @@ public class TemServiceImplImport implements TemService {
 			TemCallDetailRecord temCallDetailRecord) {
 		session.beginTransaction();
 		Transaction transaction = session.getTransaction();
-		session.save(temCallDetailRecord);
+		//session.save(temCallDetailRecord);
+		session.saveOrUpdate(temCallDetailRecord);
 		transaction.commit();
 	}
 
