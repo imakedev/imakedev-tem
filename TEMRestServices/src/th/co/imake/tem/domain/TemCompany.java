@@ -18,6 +18,8 @@ public class TemCompany implements Serializable {
 	private Integer tcId;
 	@Column(name = "TC_NAME")
 	private String tcName;
+	@Column(name = "TC_GROUP_NAME")
+	private String tgName;
 
 	public Integer getTcId() {
 		return tcId;
@@ -33,6 +35,14 @@ public class TemCompany implements Serializable {
 
 	public void setTcName(String tcName) {
 		this.tcName = tcName;
+	}
+
+	public String getTgName() {
+		return tgName;
+	}
+
+	public void setTgName(String tgName) {
+		this.tgName = tgName;
 	}
 
 }
