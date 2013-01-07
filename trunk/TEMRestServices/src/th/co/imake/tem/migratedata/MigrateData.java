@@ -24,9 +24,13 @@ import th.co.imake.tem.domain.TemCallDetailRecord;
 import th.co.imake.tem.domain.TemCallDetailRecordPk;
 import th.co.imake.tem.domain.TemCompany;
 import th.co.imake.tem.domain.TemMsIsdn;
+import th.co.imake.tem.domain.TemMsIsdnPackageDetail;
+import th.co.imake.tem.domain.TemMsIsdnPackageDetailPk;
+import th.co.imake.tem.domain.TemPackageDetail;
 import th.co.imake.tem.domain.TemProvider;
 import th.co.imake.tem.domain.TemType;
 import th.co.imake.tem.migratedata.form.CDRTemplate;
+import th.co.imake.tem.migratedata.form.GroupTemplate;
 import th.co.imake.tem.service.TemService;
 import th.co.imake.tem.service.impl.TemServiceImpl;
 import th.co.imake.tem.service.impl.TemServiceImplImport;
@@ -41,7 +45,8 @@ public class MigrateData {
 
 	public static void main(String[] args) {
 		/* Migrate Call Detail Record from Excel */
-		migrateData();
+//		migrateData();
+		migrateGroup();
 	}
 
 	public static void migrateData() {
@@ -154,7 +159,99 @@ public class MigrateData {
 		}
 		session.close();
 	}
-
+	
+	public static void migrateGroup() {
+		TemService temService = new TemServiceImplImport();
+		List list = readGroupTemplate(Util.getProperty("MIGRATE_GROUP_FILE"));
+		Session session = ConnectionUtil.getSession();
+		Paging paging = new Paging();
+		for (int i = 0; i < list.size(); i++) {
+			GroupTemplate groupTemplate = (GroupTemplate) list.get(i);
+			TemCompany temCompany = new TemCompany();
+			temCompany.setTcName(groupTemplate.getCompany());
+			temCompany.setTgName(groupTemplate.getGroup());
+			List listCompany = temService.searchTemCompany(session, temCompany,
+					paging);
+			int companySize = Integer.parseInt(listCompany.get(1)
+					.toString());
+			if(listCompany != null && companySize > 0) {
+				
+			} else {
+				temCompany = new TemCompany();
+				temCompany.setTgName(groupTemplate.getGroup());
+				temCompany.setTcName(groupTemplate.getCompany());
+				temService.insertTemCompany(session, temCompany);
+			}
+			
+			TemPackageDetail temPackageDetail = new TemPackageDetail();
+			temPackageDetail.setTpdName(groupTemplate.getPackageType());
+			List listPackage = temService.searchTemPackageDetail(session, temPackageDetail, paging);
+			int packageSize = Integer.parseInt(listPackage.get(1)
+					.toString());
+			if(listPackage != null && packageSize > 0) {
+				
+			} else {
+				temPackageDetail = new TemPackageDetail();
+				temPackageDetail.setTpdName(groupTemplate.getPackageType());
+				temService.insertTemPackageDetail(session, temPackageDetail);
+			}
+			
+			TemMsIsdn temMsIsdn = new TemMsIsdn();
+			temMsIsdn.setMsIsdn(groupTemplate.getNo());
+			List listMsIsdn = temService.searchTemMsIsdn(session, temMsIsdn, paging);
+			int msIsdnSize = Integer.parseInt(listMsIsdn.get(1)
+					.toString());
+			if(listMsIsdn != null && msIsdnSize > 0) {
+				
+			} else {
+				temMsIsdn = new TemMsIsdn();
+				temMsIsdn.setMsIsdn(groupTemplate.getNo());
+				
+				temCompany = new TemCompany();
+				temCompany.setTcName(groupTemplate.getCompany());
+				temCompany.setTgName(groupTemplate.getGroup());
+				listCompany = temService.searchTemCompany(session, temCompany,
+						paging);
+				companySize = Integer.parseInt(listCompany.get(1)
+						.toString());
+				if(listCompany != null && companySize > 0) {
+					List list2 = (List)listCompany.get(0);
+					temCompany = (TemCompany)list2.get(0);
+					temMsIsdn.setTemCompany(temCompany);
+				} 
+				temService.insertTemMsIsdn(session, temMsIsdn);
+				
+				TemMsIsdnPackageDetailPk temMsIsdnPackageDetailPk = new TemMsIsdnPackageDetailPk();
+				temMsIsdnPackageDetailPk.setMsIsdn(groupTemplate.getNo());
+				TemMsIsdnPackageDetail temMsIsdnPackageDetail = new TemMsIsdnPackageDetail();
+				temMsIsdnPackageDetail.setTemMsIsdnPackageDetailPk(temMsIsdnPackageDetailPk);
+				
+				List listMsIsdnPackage = temService.searchTemMsIsdnPackageDetail(session, temMsIsdnPackageDetail, paging);
+				int msIsdnPackageSize = Integer.parseInt(listMsIsdnPackage.get(1)
+						.toString());
+				
+				temPackageDetail = new TemPackageDetail();
+				temPackageDetail.setTpdName(groupTemplate.getPackageType());
+				listPackage = temService.searchTemPackageDetail(session, temPackageDetail, paging);
+				packageSize = Integer.parseInt(listPackage.get(1)
+						.toString());
+				if(listPackage != null && packageSize > 0) {
+					List list2 = (List)listPackage.get(0);
+					temPackageDetail = (TemPackageDetail)list2.get(0);
+					temMsIsdnPackageDetailPk.setTpdId(temPackageDetail.getTpdId());
+				}
+				
+				if(listMsIsdnPackage != null && msIsdnPackageSize > 0) {
+					temService.updateTemMsIsdnPackageDetail(session, temMsIsdnPackageDetail);
+				} else {
+					temService.insertTemMsIsdnPackageDetail(session, temMsIsdnPackageDetail);
+				}
+			}
+			
+		}	
+		session.close();
+	}
+	
 	public static List readExcel(String fileName) {
 		List list = new ArrayList();
 
@@ -222,6 +319,41 @@ public class MigrateData {
 					cdrTemplate.setPrice(Double.parseDouble(price.toString()));
 				}
 				list.add(cdrTemplate);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	public static List readGroupTemplate(String fileName) {
+		List list = new ArrayList();
+
+		try {
+			FileInputStream myInput = new FileInputStream(fileName);
+
+			POIFSFileSystem myFileSystem = new POIFSFileSystem(myInput);
+
+			HSSFWorkbook myWorkBook = new HSSFWorkbook(myFileSystem);
+
+			HSSFSheet mySheet = myWorkBook.getSheetAt(0);
+
+			Iterator rowIter = mySheet.rowIterator();
+			GroupTemplate groupTemplate = null;
+			rowIter.next();
+			while (rowIter.hasNext()) {
+				groupTemplate = new GroupTemplate();
+				HSSFRow myRow = (HSSFRow) rowIter.next();
+
+				HSSFCell group = (HSSFCell) myRow.getCell(0);
+				groupTemplate.setGroup(group.toString());
+				HSSFCell company = (HSSFCell) myRow.getCell(1);
+				groupTemplate.setCompany(company.toString());
+				HSSFCell no = (HSSFCell) myRow.getCell(2);
+				groupTemplate.setNo(no.toString());
+				HSSFCell packageType = (HSSFCell) myRow.getCell(3);
+				groupTemplate.setPackageType(packageType.toString());
+				list.add(groupTemplate);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

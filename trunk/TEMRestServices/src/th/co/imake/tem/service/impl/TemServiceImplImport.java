@@ -129,7 +129,8 @@ public class TemServiceImplImport implements TemService {
 
 			Integer tcId = temCompany.getTcId();
 			String tcName = temCompany.getTcName();
-
+			String tgName = temCompany.getTgName();
+			
 			if (tcId != null) {
 				queryStr.append((haveCondition ? " and " : " where ")
 						+ " temCompany.tcId=? ");
@@ -140,10 +141,18 @@ public class TemServiceImplImport implements TemService {
 			}
 			if (tcName != null && tcName.trim().length() > 0) {
 				queryStr.append((haveCondition ? " and " : " where ")
-						+ " temCompany.tcName=? ");
+						+ " lower(temCompany.tcName)=lower(?) ");
 				queryCount.append((haveCondition ? " and " : " where ")
-						+ " temCompany.tcName=? ");
-				map.put("" + paramindex++, tcName);
+						+ " lower(temCompany.tcName)=lower(?) ");
+				map.put("" + paramindex++, tcName.trim().toLowerCase());
+				haveCondition = true;
+			}
+			if (tgName != null && tgName.trim().length() > 0) {
+				queryStr.append((haveCondition ? " and " : " where ")
+						+ " lower(temCompany.tgName)=lower(?) ");
+				queryCount.append((haveCondition ? " and " : " where ")
+						+ " lower(temCompany.tgName)=(?) ");
+				map.put("" + paramindex++, tgName.trim().toLowerCase());
 				haveCondition = true;
 			}
 			if (paging.getOrderBy() != null
