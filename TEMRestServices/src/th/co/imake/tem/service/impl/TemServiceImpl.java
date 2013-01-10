@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import th.co.imake.tem.domain.TemCallDetailRecord;
 import th.co.imake.tem.domain.TemCallDetailRecordPk;
 import th.co.imake.tem.domain.TemCompany;
+import th.co.imake.tem.domain.TemGroup;
 import th.co.imake.tem.domain.TemMsIsdn;
 import th.co.imake.tem.domain.TemMsIsdnPackageDetail;
 import th.co.imake.tem.domain.TemMsIsdnPackageDetailPk;
@@ -1269,6 +1270,26 @@ public class TemServiceImpl implements TemService {
 
 	public List searchTemSpecialList(Session session,
 			TemSpecialList temSpecialList, Paging paging) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void insertTemGroup(Session session, TemGroup temGroup) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void updateTemGroup(Session session, TemGroup temGroup) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void deleteTemGroup(Session session, TemGroup temGroup) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public List searchTemGroup(Session session, TemGroup temGroup, Paging paging) {
 		// TODO Auto-generated method stub
 		return null;
 	}

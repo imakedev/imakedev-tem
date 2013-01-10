@@ -13,6 +13,7 @@ import org.hibernate.Transaction;
 import th.co.imake.tem.domain.TemCallDetailRecord;
 import th.co.imake.tem.domain.TemCallDetailRecordPk;
 import th.co.imake.tem.domain.TemCompany;
+import th.co.imake.tem.domain.TemGroup;
 import th.co.imake.tem.domain.TemMsIsdn;
 import th.co.imake.tem.domain.TemMsIsdnPackageDetail;
 import th.co.imake.tem.domain.TemMsIsdnPackageDetailPk;
@@ -74,6 +75,72 @@ public class TemServiceImplImport implements TemService {
 			if (paging.getOrderBy() != null
 					&& paging.getOrderBy().trim().length() > 0) {
 				queryStr.append(" Order By temType." + paging.getOrderBy()
+						+ " asc");
+			}
+			Query query = session.createQuery(queryStr.toString());
+			Query queryC = session.createQuery(queryCount.toString());
+			for (Iterator iterator = map.keySet().iterator(); iterator
+					.hasNext();) {
+				String key = (String) iterator.next();
+				query.setParameter(Integer.parseInt(key), map.get(key));
+				queryC.setParameter(Integer.parseInt(key), map.get(key));
+			}
+			query.setFirstResult(paging.getPageSize()
+					* (paging.getPageNo() - 1));
+			query.setMaxResults(paging.getPageSize());
+			List list = query.list();
+
+			int count = Integer.parseInt(queryC.uniqueResult().toString());
+			transList.add(list);
+			transList.add(count + "");
+			return transList;
+		} catch (Exception re) {
+			re.printStackTrace();
+		}
+		return null;
+	}
+	
+	public void insertTemGroup(Session session, TemGroup temGroup) {
+		session.beginTransaction();
+		Transaction transaction = session.getTransaction();
+		session.save(temGroup);
+		transaction.commit();
+	}
+
+	public void updateTemGroup(Session session, TemGroup temGroup) {
+		session.update(temGroup);
+	}
+
+	public void deleteTemGroup(Session session, TemGroup temGroup) {
+		session.delete(temGroup);
+	}
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public List searchTemGroup(Session session, TemGroup temGroup,
+			Paging paging) {
+		List transList = new ArrayList();
+		try {
+			StringBuffer queryStr = new StringBuffer(
+					"from TemGroup temGroup ");
+			StringBuffer queryCount = new StringBuffer(
+					"select count(temGroup) from  TemGroup temGroup ");
+			Map map = new HashMap();
+			boolean haveCondition = false;
+			int paramindex = 0;
+
+			String tgName = temGroup.getTgName();
+			
+			if (tgName != null && tgName.trim().length() > 0) {
+				queryStr.append((haveCondition ? " and " : " where ")
+						+ " lower(temGroup.tgName)=lower(?) ");
+				queryCount.append((haveCondition ? " and " : " where ")
+						+ " lower(temGroup.tgName)=(?) ");
+				map.put("" + paramindex++, tgName.trim().toLowerCase());
+				haveCondition = true;
+			}
+			if (paging.getOrderBy() != null
+					&& paging.getOrderBy().trim().length() > 0) {
+				queryStr.append(" Order By temGroup." + paging.getOrderBy()
 						+ " asc");
 			}
 			Query query = session.createQuery(queryStr.toString());
