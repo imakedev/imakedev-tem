@@ -23,6 +23,7 @@ import org.hibernate.Session;
 import th.co.imake.tem.domain.TemCallDetailRecord;
 import th.co.imake.tem.domain.TemCallDetailRecordPk;
 import th.co.imake.tem.domain.TemCompany;
+import th.co.imake.tem.domain.TemGroup;
 import th.co.imake.tem.domain.TemMsIsdn;
 import th.co.imake.tem.domain.TemMsIsdnPackageDetail;
 import th.co.imake.tem.domain.TemMsIsdnPackageDetailPk;
@@ -45,8 +46,8 @@ public class MigrateData {
 
 	public static void main(String[] args) {
 		/* Migrate Call Detail Record from Excel */
-//		migrateData();
-		migrateGroup();
+		migrateData();
+//		migrateGroup();
 	}
 
 	public static void migrateData() {
@@ -141,7 +142,6 @@ public class MigrateData {
 			calendar.setTime(date);
 			calendar.setTimeInMillis(time.getTime());
 			Timestamp timestamp = new Timestamp(calendar.getTime().getTime());
-			System.out.println(timestamp);
 			temCallDetailRecordPk.setTcdrUsedTime(new Timestamp(cdrTemplate
 					.getUsedTime().getTime()));
 			int typeSize = Integer.parseInt(listType.get(1).toString());
@@ -167,6 +167,15 @@ public class MigrateData {
 		Paging paging = new Paging();
 		for (int i = 0; i < list.size(); i++) {
 			GroupTemplate groupTemplate = (GroupTemplate) list.get(i);
+			
+			TemGroup temGroup = new TemGroup();
+			temGroup.setTgName(groupTemplate.getGroup());
+			try {
+				temService.insertTemGroup(session, temGroup);
+			} catch (Exception e) {
+//				e.printStackTrace();
+			}
+			
 			TemCompany temCompany = new TemCompany();
 			temCompany.setTcName(groupTemplate.getCompany());
 			temCompany.setTgName(groupTemplate.getGroup());
@@ -288,20 +297,20 @@ public class MigrateData {
 						&& toProvider.toString().trim().length() > 0) {
 					cdrTemplate.setMsIsdnToProvider(toProvider.toString());
 				}
-				HSSFCell usedCount = (HSSFCell) myRow.getCell(5);
-				cdrTemplate.setUsedCount(usedCount.getNumericCellValue());
-				HSSFCell type = (HSSFCell) myRow.getCell(7);
+				
+				HSSFCell type = (HSSFCell) myRow.getCell(5);
 				cdrTemplate.setUsedType(type.toString());
-				HSSFCell date = (HSSFCell) myRow.getCell(8);
+				
+				HSSFCell date = (HSSFCell) myRow.getCell(6);
 				Date usedDate = new Date();
 				if (date != null && date.toString().trim().length() > 0) {
 					usedDate = dateFormat.parse(date.toString());
 				}
 				cdrTemplate.setUsedDate(usedDate);
+				
 				Calendar calendar = new GregorianCalendar();
 				calendar.setTime(usedDate);
-
-				HSSFCell time = (HSSFCell) myRow.getCell(9);
+				HSSFCell time = (HSSFCell) myRow.getCell(7);
 				Time usedTime = new Time(calendar.getTime().getTime());
 				if (time != null && time.toString().trim().length() > 0) {
 					String[] timeSplit = time.toString().split(":");
@@ -313,7 +322,27 @@ public class MigrateData {
 				}
 				usedTime.setTime(calendar.getTime().getTime());
 				cdrTemplate.setUsedTime(usedTime);
-				HSSFCell price = (HSSFCell) myRow.getCell(10);
+				
+				HSSFCell usedCount = (HSSFCell) myRow.getCell(8);
+				Double used = 0.0;
+				if(type.toString().trim().equalsIgnoreCase("call")) {
+					if(usedCount.toString().trim().indexOf(":") >= 0) {
+						String[] timeSplit = usedCount.toString().trim().split(":");
+						if(timeSplit.length == 3) {
+							used = (Double.parseDouble(timeSplit[0])+(Double.parseDouble(timeSplit[1])/100)+(Double.parseDouble(timeSplit[2])/1000));
+						} else {
+							used = (Double.parseDouble(timeSplit[0])+(Double.parseDouble(timeSplit[1])/100));
+						}
+						
+					} else {
+						used = Double.parseDouble(usedCount.toString().trim());
+					}
+				} else {
+					used = Double.parseDouble(usedCount.toString().trim());
+				}
+				cdrTemplate.setUsedCount(used);
+				
+				HSSFCell price = (HSSFCell) myRow.getCell(11);
 				// System.out.println("Price : " + price);
 				if (price != null && price.toString().trim().length() > 0) {
 					cdrTemplate.setPrice(Double.parseDouble(price.toString()));

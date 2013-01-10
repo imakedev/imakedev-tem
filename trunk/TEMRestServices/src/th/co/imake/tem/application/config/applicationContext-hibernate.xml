@@ -53,6 +53,7 @@
    		 -->
    		 <property name="annotatedClasses">
      		<list> 
+     			<value>th.co.imake.tem.domain.TemGroup</value>
      			<value>th.co.imake.tem.domain.TemProvider</value>
      			<value>th.co.imake.tem.domain.TemType</value>
      			<value>th.co.imake.tem.domain.TemCompany</value>

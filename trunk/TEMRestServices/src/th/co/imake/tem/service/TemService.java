@@ -6,6 +6,7 @@ import org.hibernate.Session;
 
 import th.co.imake.tem.domain.TemCallDetailRecord;
 import th.co.imake.tem.domain.TemCompany;
+import th.co.imake.tem.domain.TemGroup;
 import th.co.imake.tem.domain.TemMsIsdn;
 import th.co.imake.tem.domain.TemMsIsdnPackageDetail;
 import th.co.imake.tem.domain.TemPackageDetail;
@@ -25,6 +26,11 @@ public interface TemService {
 	public void updateTemCompany(Session session, TemCompany temCompany);
 	public void deleteTemCompany(Session session, TemCompany temCompany);
 	public List searchTemCompany(Session session, TemCompany temCompany, Paging paging);
+	
+	public void insertTemGroup(Session session, TemGroup temGroup);
+	public void updateTemGroup(Session session, TemGroup temGroup);
+	public void deleteTemGroup(Session session, TemGroup temGroup);
+	public List searchTemGroup(Session session, TemGroup temGroup, Paging paging);
 	
 	public void insertTemMsIsdn(Session session, TemMsIsdn temMsIsdn);
 	public void updateTemMsIsdn(Session session, TemMsIsdn temMsIsdn);
