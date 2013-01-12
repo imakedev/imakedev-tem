@@ -4,6 +4,10 @@ import java.io.FileInputStream;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.Format;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -12,6 +16,8 @@ import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -43,11 +49,30 @@ public class MigrateData {
 
 	public static DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy",
 			Locale.US);
-
+	public static DecimalFormat phoneFormat = new DecimalFormat("0000000000");
+	
+	public static Pattern pattern = Pattern.compile("\\d{2}/\\d{2}/\\d{2} \\d{6} \\w.*");
+	public static Pattern usedPattern = Pattern.compile("\\d{1,2}:\\d{2}:\\d{2}");
+	public static Pattern phonePattern = Pattern.compile("\\d{0,2}.\\d{0,10}E\\d{0,2}");
+	public static Pattern patternTOT = Pattern.compile("\\d{1,2}:\\d{2}:\\d{2} \\d{2}/\\d{2}/\\d{4} \\w.*");
+	
+	public static DateFormat dateFormatTrue = new SimpleDateFormat("dd/MM/yy hhmmss", new Locale("th", "TH"));
+	public static DateFormat dateFormatTOT = new SimpleDateFormat("hh:mm:ss dd/MM/yyyy", new Locale("th", "TH"));
+	
 	public static void main(String[] args) {
 		/* Migrate Call Detail Record from Excel */
-		migrateData();
+//		migrateData();
 //		migrateGroup();
+//		System.out.println(phoneFormat.format(Long.parseLong("848810484")));
+		List listDataTrue = readTrueTemplate(Util.getProperty("MIGRATE_DATA_TRUE"));
+		migrateData(listDataTrue);
+		List listDataTOT = readTOTTemplate(Util.getProperty("MIGRATE_DATA_TOT"));
+		migrateData(listDataTOT);
+//		String date = "19/10/55 185012 Mobile in BKK. Area";
+//		Pattern pattern2 = Pattern.compile("\\d{2}/\\d{2}/\\d{2} \\d{6} \\w.*");
+//		Matcher matcher = pattern2.matcher(date.toString());
+//		boolean b = matcher.matches();
+//		System.out.println(b);
 	}
 
 	public static void migrateData() {
@@ -142,6 +167,46 @@ public class MigrateData {
 			calendar.setTime(date);
 			calendar.setTimeInMillis(time.getTime());
 			Timestamp timestamp = new Timestamp(calendar.getTime().getTime());
+			temCallDetailRecordPk.setTcdrUsedTime(new Timestamp(cdrTemplate
+					.getUsedTime().getTime()));
+			int typeSize = Integer.parseInt(listType.get(1).toString());
+			List types = (List) listType.get(0);
+			for (int j = 0; j < typeSize; j++) {
+				TemType type = (TemType) types.get(j);
+				if (cdrTemplate.getUsedType()
+						.equalsIgnoreCase(type.getTtName())) {
+					temCallDetailRecordPk.setTtId(type.getTtId());
+					break;
+				}
+			}
+			temCallDetailRecord.setTemCallDetailRecordPk(temCallDetailRecordPk);
+			temService.insertTemCallDetailRecord(session, temCallDetailRecord);
+		}
+		session.close();
+	}
+	
+	public static void migrateData(List list) {
+		TemService temService = new TemServiceImplImport();
+		Session session = ConnectionUtil.getSession();
+		
+		Paging paging = new Paging();
+		TemType temType = new TemType();
+		List listType = temService.searchTemType(session, temType, paging);
+		
+		for (int i = 0; i < list.size(); i++) {
+			CDRTemplate cdrTemplate = (CDRTemplate) list.get(i);
+			
+			TemCallDetailRecord temCallDetailRecord = new TemCallDetailRecord();
+			temCallDetailRecord.setTcdrMsIsdnTo(cdrTemplate.getMsIsdnTo());
+			temCallDetailRecord.setTcdrUsedCount(cdrTemplate.getUsedCount());
+			TemCallDetailRecordPk temCallDetailRecordPk = new TemCallDetailRecordPk();
+			temCallDetailRecordPk
+					.setTcdrMsIsdnFrom(cdrTemplate.getMsIsdnFrom());
+			Date date = cdrTemplate.getUsedDate();
+			Time time = cdrTemplate.getUsedTime();
+			Calendar calendar = new GregorianCalendar();
+			calendar.setTime(date);
+			calendar.setTimeInMillis(time.getTime());
 			temCallDetailRecordPk.setTcdrUsedTime(new Timestamp(cdrTemplate
 					.getUsedTime().getTime()));
 			int typeSize = Integer.parseInt(listType.get(1).toString());
@@ -348,6 +413,162 @@ public class MigrateData {
 					cdrTemplate.setPrice(Double.parseDouble(price.toString()));
 				}
 				list.add(cdrTemplate);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	public static List readTrueTemplate(String fileName) {
+		List list = new ArrayList();
+
+		try {
+			FileInputStream myInput = new FileInputStream(fileName);
+			POIFSFileSystem myFileSystem = new POIFSFileSystem(myInput);
+			HSSFWorkbook myWorkBook = new HSSFWorkbook(myFileSystem);
+			HSSFSheet mySheet = myWorkBook.getSheetAt(0);
+
+			Iterator rowIter = mySheet.rowIterator();
+			CDRTemplate cdrTemplate = null;
+			rowIter.next();
+			while (rowIter.hasNext()) {
+				cdrTemplate = new CDRTemplate();
+				HSSFRow myRow = (HSSFRow) rowIter.next();
+
+				HSSFCell from = (HSSFCell) myRow.getCell(0);
+				Matcher phoneMatcher = phonePattern.matcher(from.toString());
+				String fromStr = "";
+				if(phoneMatcher.matches()) {
+					fromStr = from.toString().replace(".", "");
+					fromStr = fromStr.substring(0, fromStr.indexOf("E"));
+				} else {
+					fromStr = from.toString();
+				}
+//				cdrTemplate.setMsIsdnFrom(phoneFormat.format(Long.parseLong(fromStr)));
+				cdrTemplate.setMsIsdnFrom("0".concat(fromStr));
+				
+				HSSFCell to = (HSSFCell) myRow.getCell(1);
+				if (to != null && to.toString().trim().length() > 0) {
+					phoneMatcher = phonePattern.matcher(to.toString());
+					String toStr = "";
+					if(phoneMatcher.matches()) {
+						toStr = to.toString().replace(".", "");
+						toStr = toStr.substring(0, toStr.indexOf("E"));
+					} else {
+						toStr = to.toString();
+					}
+//					cdrTemplate.setMsIsdnTo(phoneFormat.format(Long.parseLong(toStr)));
+					cdrTemplate.setMsIsdnTo("0".concat(toStr));
+				}
+				
+				HSSFCell date = (HSSFCell) myRow.getCell(2);
+				
+				Matcher matcher = pattern.matcher(date.toString());
+				boolean b = matcher.matches();
+				
+				HSSFCell usedCount = (HSSFCell) myRow.getCell(3);
+				Double used = 0.0;
+				Matcher usedMatcher = usedPattern.matcher(usedCount.toString());
+				if(usedMatcher.matches()) {
+					String[] useSplit = usedCount.toString().trim().split(":");
+					used = ((Double.parseDouble(useSplit[0])*60)+(Double.parseDouble(useSplit[1]))+(Double.parseDouble(useSplit[2])/100));
+				}
+				cdrTemplate.setUsedCount(used);
+				cdrTemplate.setUsedType("call");
+				
+				if(b) {
+					String dateStr = date.toString();
+					String dateSplit[] = dateStr.split(" ");
+					Date usedDate = dateFormatTrue.parse(dateSplit[0]+" "+dateSplit[1]);
+					cdrTemplate.setUsedDate(usedDate);
+					
+					Time usedTime = new Time(usedDate.getTime());
+					cdrTemplate.setUsedTime(usedTime);
+					
+					list.add(cdrTemplate);
+				} else {
+					System.err.println("Format not support.");
+				}
+				
+				System.out.println(cdrTemplate.getMsIsdnFrom()+"\t"+cdrTemplate.getMsIsdnTo()+"\t"+cdrTemplate.getUsedDate()+"\t"+cdrTemplate.getUsedTime()+"\t"+cdrTemplate.getUsedCount());
+				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	public static List readTOTTemplate(String fileName) {
+		List list = new ArrayList();
+
+		try {
+			FileInputStream myInput = new FileInputStream(fileName);
+
+			POIFSFileSystem myFileSystem = new POIFSFileSystem(myInput);
+
+			HSSFWorkbook myWorkBook = new HSSFWorkbook(myFileSystem);
+
+			HSSFSheet mySheet = myWorkBook.getSheetAt(0);
+
+			Iterator rowIter = mySheet.rowIterator();
+			CDRTemplate cdrTemplate = null;
+			rowIter.next();
+			while (rowIter.hasNext()) {
+				cdrTemplate = new CDRTemplate();
+				HSSFRow myRow = (HSSFRow) rowIter.next();
+
+				HSSFCell from = (HSSFCell) myRow.getCell(0);
+				Matcher phoneMatcher = phonePattern.matcher(from.toString());
+				String fromStr = "";
+				if(phoneMatcher.matches()) {
+					fromStr = from.toString().replace(".", "");
+					fromStr = fromStr.substring(0, fromStr.indexOf("E"));
+				} else {
+					fromStr = from.toString();
+				}
+//				cdrTemplate.setMsIsdnFrom(phoneFormat.format(Long.parseLong(fromStr)));
+				cdrTemplate.setMsIsdnFrom("0".concat(fromStr));
+				
+				HSSFCell to = (HSSFCell) myRow.getCell(1);
+				if (to != null && to.toString().trim().length() > 0) {
+					phoneMatcher = phonePattern.matcher(to.toString());
+					String toStr = "";
+					if(phoneMatcher.matches()) {
+						toStr = to.toString().replace(".", "");
+						toStr = toStr.substring(0, toStr.indexOf("E"));
+					} else {
+						toStr = to.toString();
+					}
+//					cdrTemplate.setMsIsdnTo(phoneFormat.format(Long.parseLong(toStr)));
+					cdrTemplate.setMsIsdnTo("0".concat(toStr));
+				}
+				
+				HSSFCell date = (HSSFCell) myRow.getCell(2);
+				
+				HSSFCell usedCount = (HSSFCell) myRow.getCell(4);
+				Double used = 0.0;
+				used = Double.parseDouble(usedCount.toString());
+				cdrTemplate.setUsedCount(used);
+				cdrTemplate.setUsedType("call");
+				
+				Matcher matcher = patternTOT.matcher(date.toString());
+				boolean b = matcher.matches();
+				
+				if(b) {
+					String dateStr = date.toString();
+					String dateSplit[] = dateStr.split(" ");
+					Date usedDate = dateFormatTOT.parse(dateSplit[0]+" "+dateSplit[1]);
+					cdrTemplate.setUsedDate(usedDate);
+					
+					Time usedTime = new Time(usedDate.getTime());
+					cdrTemplate.setUsedTime(usedTime);
+					list.add(cdrTemplate);
+				} else {
+					System.err.println("Format not support.");
+				}
+//				System.out.println(cdrTemplate.getMsIsdnFrom()+"\t"+cdrTemplate.getMsIsdnTo()+"\t"+cdrTemplate.getUsedDate()+"\t"+cdrTemplate.getUsedTime()+"\t"+cdrTemplate.getUsedCount());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
