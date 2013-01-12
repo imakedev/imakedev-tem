@@ -61,7 +61,7 @@ public class ImportMasterData {
 
 	public static void saveTemCompany(Session session) {
 		TemCompany temCompany = new TemCompany();
-		temCompany.setTcName("VLink");
+		temCompany.setTcName("IMake");
 		TemService temService = new TemServiceImplImport();
 		temService.insertTemCompany(session, temCompany);
 	}
