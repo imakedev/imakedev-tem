@@ -16,6 +16,7 @@ public class CDRTemplate implements Serializable {
 	private Date usedDate;
 	private Time usedTime;
 	private Double price;
+	private String callTo;
 
 	public String getMsIsdnFrom() {
 		return msIsdnFrom;
@@ -95,6 +96,14 @@ public class CDRTemplate implements Serializable {
 
 	public void setPrice(Double price) {
 		this.price = price;
+	}
+
+	public String getCallTo() {
+		return callTo;
+	}
+
+	public void setCallTo(String callTo) {
+		this.callTo = callTo;
 	}
 
 }

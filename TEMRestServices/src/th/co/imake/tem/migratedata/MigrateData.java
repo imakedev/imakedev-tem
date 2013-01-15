@@ -199,6 +199,9 @@ public class MigrateData {
 			TemCallDetailRecord temCallDetailRecord = new TemCallDetailRecord();
 			temCallDetailRecord.setTcdrMsIsdnTo(cdrTemplate.getMsIsdnTo());
 			temCallDetailRecord.setTcdrUsedCount(cdrTemplate.getUsedCount());
+			temCallDetailRecord.setTcdrCallTo(cdrTemplate.getCallTo());
+			temCallDetailRecord.setTcdrSource(0);
+			temCallDetailRecord.setTcdrValue(cdrTemplate.getPrice());
 			TemCallDetailRecordPk temCallDetailRecordPk = new TemCallDetailRecordPk();
 			temCallDetailRecordPk
 					.setTcdrMsIsdnFrom(cdrTemplate.getMsIsdnFrom());
@@ -477,6 +480,15 @@ public class MigrateData {
 				cdrTemplate.setUsedCount(used);
 				cdrTemplate.setUsedType("call");
 				
+				Double value = 0.0;
+				HSSFCell price = (HSSFCell) myRow.getCell(4);
+				try {
+					value = price.getNumericCellValue();
+				} catch (Exception e) {
+					value = 0.0;
+				}
+				cdrTemplate.setPrice(value);
+				
 				if(b) {
 					String dateStr = date.toString();
 					String dateSplit[] = dateStr.split(" ");
@@ -486,6 +498,13 @@ public class MigrateData {
 					Time usedTime = new Time(usedDate.getTime());
 					cdrTemplate.setUsedTime(usedTime);
 					
+					int le = dateSplit.length;
+					String callTo = "";
+					for(int i=2;i<le;i++) {
+						callTo += dateSplit[i];
+						callTo += " ";
+					}
+					cdrTemplate.setCallTo(callTo);
 					list.add(cdrTemplate);
 				} else {
 					System.err.println("Format not support.");
@@ -553,6 +572,15 @@ public class MigrateData {
 				cdrTemplate.setUsedCount(used);
 				cdrTemplate.setUsedType("call");
 				
+				Double value = 0.0;
+				HSSFCell price = (HSSFCell) myRow.getCell(5);
+				try {
+					value = price.getNumericCellValue();
+				} catch (Exception e) {
+					value = 0.0;
+				}
+				cdrTemplate.setPrice(value);
+				
 				Matcher matcher = patternTOT.matcher(date.toString());
 				boolean b = matcher.matches();
 				
@@ -564,6 +592,14 @@ public class MigrateData {
 					
 					Time usedTime = new Time(usedDate.getTime());
 					cdrTemplate.setUsedTime(usedTime);
+					
+					int le = dateSplit.length;
+					String callTo = "";
+					for(int i=2;i<le;i++) {
+						callTo += dateSplit[i];
+						callTo += " ";
+					}
+					cdrTemplate.setCallTo(callTo);
 					list.add(cdrTemplate);
 				} else {
 					System.err.println("Format not support.");
