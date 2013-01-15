@@ -20,6 +20,12 @@ public class TemCallDetailRecord implements Serializable {
 	private String tcdrMsIsdnTo;
 	@Column(name = "TCDR_USED_COUNT")
 	private Double tcdrUsedCount;
+	@Column(name = "TCDR_SOURCE")
+	private Integer tcdrSource;
+	@Column(name = "TCDR_VALUE")
+	private Double tcdrValue;
+	@Column(name = "TCDR_CALL_TO")
+	private String tcdrCallTo;
 //	@ManyToOne
 //	@Column(name = "TT_ID")
 //	private TemType temType;
@@ -47,6 +53,30 @@ public class TemCallDetailRecord implements Serializable {
 
 	public void setTcdrUsedCount(Double tcdrUsedCount) {
 		this.tcdrUsedCount = tcdrUsedCount;
+	}
+
+	public Integer getTcdrSource() {
+		return tcdrSource;
+	}
+
+	public void setTcdrSource(Integer tcdrSource) {
+		this.tcdrSource = tcdrSource;
+	}
+
+	public Double getTcdrValue() {
+		return tcdrValue;
+	}
+
+	public void setTcdrValue(Double tcdrValue) {
+		this.tcdrValue = tcdrValue;
+	}
+
+	public String getTcdrCallTo() {
+		return tcdrCallTo;
+	}
+
+	public void setTcdrCallTo(String tcdrCallTo) {
+		this.tcdrCallTo = tcdrCallTo;
 	}
 
 //	public TemType getTemType() {
