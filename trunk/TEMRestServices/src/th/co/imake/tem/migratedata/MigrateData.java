@@ -59,15 +59,18 @@ public class MigrateData {
 	public static DateFormat dateFormatTrue = new SimpleDateFormat("dd/MM/yy hhmmss", new Locale("th", "TH"));
 	public static DateFormat dateFormatTOT = new SimpleDateFormat("hh:mm:ss dd/MM/yyyy", new Locale("th", "TH"));
 	
+	public static DateFormat dateFormatTrue_ext = new SimpleDateFormat("HH:mm:ss");
+	public static Pattern amountPattern = Pattern.compile("\\d{1,2}.\\d{1,2}");
+	
 	public static void main(String[] args) {
 		/* Migrate Call Detail Record from Excel */
 //		migrateData();
 //		migrateGroup();
 //		System.out.println(phoneFormat.format(Long.parseLong("848810484")));
 		List listDataTrue = readTrueTemplate(Util.getProperty("MIGRATE_DATA_TRUE"));
-		migrateData(listDataTrue);
-		List listDataTOT = readTOTTemplate(Util.getProperty("MIGRATE_DATA_TOT"));
-		migrateData(listDataTOT);
+	//	migrateData(listDataTrue);
+		/*List listDataTOT = readTOTTemplate(Util.getProperty("MIGRATE_DATA_TOT"));
+		migrateData(listDataTOT);*/
 //		String date = "19/10/55 185012 Mobile in BKK. Area";
 //		Pattern pattern2 = Pattern.compile("\\d{2}/\\d{2}/\\d{2} \\d{6} \\w.*");
 //		Matcher matcher = pattern2.matcher(date.toString());
@@ -450,11 +453,11 @@ public class MigrateData {
 				}
 //				cdrTemplate.setMsIsdnFrom(phoneFormat.format(Long.parseLong(fromStr)));
 				cdrTemplate.setMsIsdnFrom("0".concat(fromStr));
-				
+				String toStr = "";
 				HSSFCell to = (HSSFCell) myRow.getCell(1);
 				if (to != null && to.toString().trim().length() > 0) {
 					phoneMatcher = phonePattern.matcher(to.toString());
-					String toStr = "";
+					
 					if(phoneMatcher.matches()) {
 						toStr = to.toString().replace(".", "");
 						toStr = toStr.substring(0, toStr.indexOf("E"));
@@ -471,6 +474,23 @@ public class MigrateData {
 				boolean b = matcher.matches();
 				
 				HSSFCell usedCount = (HSSFCell) myRow.getCell(3);
+				if(0==usedCount.getCellType()){
+					System.out.println(usedCount.getCellType());
+					Date aoeTest=usedCount.getDateCellValue();
+					
+					String aoeStr=dateFormatTrue_ext.format(aoeTest);
+					System.out.println(aoeTest+" , "+aoeStr);
+				}
+				HSSFCell amount = (HSSFCell) myRow.getCell(4);
+				System.out.println("amount="+amount.getNumericCellValue()+","+amount.getCellType());
+				Matcher matcherx = amountPattern.matcher(amount.toString());
+				boolean bx = matcherx.matches();
+				if(bx){
+					System.out.println(amount);
+				}else{
+					System.err.println(amount);
+				}
+				
 				Double used = 0.0;
 				Matcher usedMatcher = usedPattern.matcher(usedCount.toString());
 				if(usedMatcher.matches()) {
@@ -507,7 +527,7 @@ public class MigrateData {
 					cdrTemplate.setCallTo(callTo);
 					list.add(cdrTemplate);
 				} else {
-					System.err.println("Format not support.");
+					System.err.println("Format not support. at "+fromStr+" to "+toStr);
 				}
 				
 				System.out.println(cdrTemplate.getMsIsdnFrom()+"\t"+cdrTemplate.getMsIsdnTo()+"\t"+cdrTemplate.getUsedDate()+"\t"+cdrTemplate.getUsedTime()+"\t"+cdrTemplate.getUsedCount());
