@@ -19,6 +19,7 @@ public class CDRTemplate implements Serializable {
 	private String msIsdnToLocation;
 	private String msIsdnFromLocation;
 	private String callTo;
+	private Date billCycle;
 
 	public String getMsIsdnFrom() {
 		return msIsdnFrom;
@@ -121,6 +122,14 @@ public String getCallTo() {
 
 	public void setCallTo(String callTo) {
 		this.callTo = callTo;
+	}
+
+	public Date getBillCycle() {
+		return billCycle;
+	}
+
+	public void setBillCycle(Date billCycle) {
+		this.billCycle = billCycle;
 	}
 
 }
