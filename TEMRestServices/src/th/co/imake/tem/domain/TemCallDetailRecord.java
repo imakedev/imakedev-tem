@@ -1,12 +1,11 @@
 package th.co.imake.tem.domain;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -26,6 +25,8 @@ public class TemCallDetailRecord implements Serializable {
 	private Double tcdrValue;
 	@Column(name = "TCDR_CALL_TO")
 	private String tcdrCallTo;
+	@Column(name = "TCDR_BILL_CYCLE")
+	private Timestamp tcdrBillCycle; 
 //	@ManyToOne
 //	@Column(name = "TT_ID")
 //	private TemType temType;
@@ -77,6 +78,14 @@ public class TemCallDetailRecord implements Serializable {
 
 	public void setTcdrCallTo(String tcdrCallTo) {
 		this.tcdrCallTo = tcdrCallTo;
+	}
+
+	public Timestamp getTcdrBillCycle() {
+		return tcdrBillCycle;
+	}
+
+	public void setTcdrBillCycle(Timestamp tcdrBillCycle) {
+		this.tcdrBillCycle = tcdrBillCycle;
 	}
 
 //	public TemType getTemType() {
