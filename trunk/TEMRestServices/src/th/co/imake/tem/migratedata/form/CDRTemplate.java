@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.sql.Time;
 import java.util.Date;
 
+import javax.persistence.Column;
+
 public class CDRTemplate implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String msIsdnFrom;
@@ -20,6 +22,7 @@ public class CDRTemplate implements Serializable {
 	private String msIsdnFromLocation;
 	private String callTo;
 	private Date billCycle;
+	private String tcdrType;
 
 	public String getMsIsdnFrom() {
 		return msIsdnFrom;
@@ -130,6 +133,14 @@ public String getCallTo() {
 
 	public void setBillCycle(Date billCycle) {
 		this.billCycle = billCycle;
+	}
+
+	public String getTcdrType() {
+		return tcdrType;
+	}
+
+	public void setTcdrType(String tcdrType) {
+		this.tcdrType = tcdrType;
 	}
 
 }
