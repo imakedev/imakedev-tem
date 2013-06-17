@@ -17,6 +17,8 @@ public class TemCallDetailRecord extends BaseDTO implements Serializable {
 	private Timestamp tcdrUsedTime;
 	@XStreamAlias("temTypeDTO")
 	private TemType temType;
+	
+	private String tcdrType;
 
 	public String getTcdrMsIsdnFrom() {
 		return tcdrMsIsdnFrom;
@@ -56,6 +58,14 @@ public class TemCallDetailRecord extends BaseDTO implements Serializable {
 
 	public void setTemType(TemType temType) {
 		this.temType = temType;
+	}
+
+	public String getTcdrType() {
+		return tcdrType;
+	}
+
+	public void setTcdrType(String tcdrType) {
+		this.tcdrType = tcdrType;
 	}
 
 }

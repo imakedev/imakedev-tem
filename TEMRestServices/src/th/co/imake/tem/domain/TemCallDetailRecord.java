@@ -27,6 +27,10 @@ public class TemCallDetailRecord implements Serializable {
 	private String tcdrCallTo;
 	@Column(name = "TCDR_BILL_CYCLE")
 	private Timestamp tcdrBillCycle; 
+	
+	@Column(name = "TCDR_TYPE")
+	private String tcdrType;
+	
 //	@ManyToOne
 //	@Column(name = "TT_ID")
 //	private TemType temType;
@@ -87,6 +91,15 @@ public class TemCallDetailRecord implements Serializable {
 	public void setTcdrBillCycle(Timestamp tcdrBillCycle) {
 		this.tcdrBillCycle = tcdrBillCycle;
 	}
+
+	public String getTcdrType() {
+		return tcdrType;
+	}
+
+	public void setTcdrType(String tcdrType) {
+		this.tcdrType = tcdrType;
+	}
+	
 
 //	public TemType getTemType() {
 //		return temType;
