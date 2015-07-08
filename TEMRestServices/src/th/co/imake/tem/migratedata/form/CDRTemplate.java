@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.sql.Time;
 import java.util.Date;
 
-import javax.persistence.Column;
-
 public class CDRTemplate implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String msIsdnFrom;
@@ -23,6 +21,20 @@ public class CDRTemplate implements Serializable {
 	private String callTo;
 	private Date billCycle;
 	private String tcdrType;
+	private String ttid;
+	private String durationTime;
+	private Double gprsPrdQnt;
+	private String featureCode;//FEATURE_CODE
+	private String tcdrDataType;//TCDR_DATA_TYPE
+	private String tcdrDirection;
+	private Double tcdrAmt;
+	public String getTcdrDataType() {
+		return tcdrDataType;
+	}
+
+	public void setTcdrDataType(String tcdrDataType) {
+		this.tcdrDataType = tcdrDataType;
+	}
 
 	public String getMsIsdnFrom() {
 		return msIsdnFrom;
@@ -141,6 +153,54 @@ public String getCallTo() {
 
 	public void setTcdrType(String tcdrType) {
 		this.tcdrType = tcdrType;
+	}
+
+	public String getTtid() {
+		return ttid;
+	}
+
+	public void setTtid(String ttid) {
+		this.ttid = ttid;
+	}
+
+	public String getDurationTime() {
+		return durationTime;
+	}
+
+	public void setDurationTime(String durationTime) {
+		this.durationTime = durationTime;
+	}
+
+	public Double getGprsPrdQnt() {
+		return gprsPrdQnt;
+	}
+
+	public void setGprsPrdQnt(Double gprsPrdQnt) {
+		this.gprsPrdQnt = gprsPrdQnt;
+	}
+
+	public String getFeatureCode() {
+		return featureCode;
+	}
+
+	public void setFeatureCode(String featureCode) {
+		this.featureCode = featureCode;
+	}
+
+	public Double getTcdrAmt() {
+		return tcdrAmt;
+	}
+
+	public void setTcdrAmt(Double tcdrAmt) {
+		this.tcdrAmt = tcdrAmt;
+	}
+
+	public String getTcdrDirection() {
+		return tcdrDirection;
+	}
+
+	public void setTcdrDirection(String tcdrDirection) {
+		this.tcdrDirection = tcdrDirection;
 	}
 
 }
