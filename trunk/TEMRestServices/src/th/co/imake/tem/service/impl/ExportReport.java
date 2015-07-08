@@ -201,8 +201,8 @@ public class ExportReport {
 		String DB_CONN_STRING = "jdbc:mysql://localhost:3306/BLUECODE_DB2";
 		String DRIVER_CLASS_NAME = "com.mysql.jdbc.Driver";
 		String USER_NAME = "root";
-	//	String PASSWORD = "password";
-		String PASSWORD = "015482543a6e";
+	//	String PASSWORD = "";
+		String PASSWORD = "";
 
 		try {
 			Class.forName(DRIVER_CLASS_NAME).newInstance();

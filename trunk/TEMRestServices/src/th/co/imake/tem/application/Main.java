@@ -1,28 +1,8 @@
 package th.co.imake.tem.application;
 
-import java.sql.Timestamp;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
-
 import org.restlet.Component;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import th.co.imake.tem.domain.TemCallDetailRecord;
-import th.co.imake.tem.domain.TemCallDetailRecordPk;
-import th.co.imake.tem.domain.TemCompany;
-import th.co.imake.tem.domain.TemMsIsdn;
-import th.co.imake.tem.domain.TemMsIsdnPackageDetail;
-import th.co.imake.tem.domain.TemMsIsdnPackageDetailPk;
-import th.co.imake.tem.domain.TemProvider;
-import th.co.imake.tem.domain.TemSpecialList;
-import th.co.imake.tem.domain.TemSpecialListPk;
-import th.co.imake.tem.domain.TemType;
-import th.co.imake.tem.migratedata.MigrateData;
-import th.co.imake.tem.service.TemService;
-import th.co.imake.tem.util.Paging;
 
 public class Main {
 
@@ -36,7 +16,7 @@ public class Main {
 						"th/co/imake/tem/application/config/applicationContext-server.xml" });
 
 		((Component) springContext.getBean("top")).start();
-		TemService temService = (TemService)springContext.getBean("temService");
+		//TemService temService = (TemService)springContext.getBean("temService");
 		
 //		saveTemProvider(temService);
 //		searchTemProvider(temService);
