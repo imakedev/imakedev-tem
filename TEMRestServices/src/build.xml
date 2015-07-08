@@ -1,0 +1,21 @@
+<project>
+
+ 
+	<target name="jar_thebluecode_dto">
+		<jar destfile="../target/bluecode.jar">
+			<!-- MISSExamServices/build/classes -->
+			<!-- common -->			  
+			<fileset dir="../WebContent/WEB-INF/classes" includes="th/co/imake/tem/constant/*.class" />
+			<!-- 
+			<fileset dir="../build/classes" includes="th/co/vlink/criteria/*.class" />
+			<fileset dir="../build/classes" includes="th/co/vlink/utils/*.class" />
+			<fileset dir="../build/classes" includes="th/co/vlink/utils/properties/*.class" />
+			-->
+			<fileset dir="../WebContent/WEB-INF/classes" includes="th/co/imake/tem/dto/*.class" /> 
+			<fileset dir="../WebContent/WEB-INF/classes" includes="th/co/imake/tem/migratedata/form/*.class" /> 
+			<fileset dir="../WebContent/WEB-INF/classes" includes="th/co/imake/tem/util/Paging.class" />
+			<fileset dir="../WebContent/WEB-INF/classes" includes="th/co/imake/tem/util/Util.class" />
+			<fileset dir="../WebContent/WEB-INF/classes" includes="th/co/imake/tem/util/XStreamUtils.class" />
+		</jar>
+	</target> 
+</project>
